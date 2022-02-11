@@ -1,10 +1,8 @@
 package com.salesianostriana.dam.miarma.model;
 
+import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import lombok.*;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -24,5 +22,16 @@ public class Post implements Serializable {
 
     private String archivo;
 
+    @ManyToOne
+    private UserEntity usuario;
 
+    public void addToUser(UserEntity u) {
+        this.usuario = u;
+        u.getPosts().add(this);
+    }
+
+    public void removeUser(UserEntity u) {
+        u.getPosts().remove(this);
+        this.usuario = null;
+    }
 }

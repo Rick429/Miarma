@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.miarma.users.model;
 
+import com.salesianostriana.dam.miarma.model.Post;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -58,13 +60,45 @@ public class UserEntity implements UserDetails {
 
     private String password;
 
+    @ManyToMany(mappedBy = "following", fetch = FetchType.EAGER)
+    private List<UserEntity> followers;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(joinColumns = @JoinColumn(name = "user_id",
+            foreignKey = @ForeignKey(name="FK_FOLLOWING_USER")),
+            inverseJoinColumns = @JoinColumn(name = "user_id",
+                    foreignKey = @ForeignKey(name="FK_USER_FOLLOW")),
+            name = "follower"
+    )
+    private List<UserEntity> following = new ArrayList<>();
+
     @CreatedDate
     private LocalDateTime createdAt;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "usuario")
+    private List<Post> posts = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
+
+    public void addFollower(UserEntity u) {
+        if (this.getFollowers() == null)
+            this.setFollowers(new ArrayList<>());
+        this.getFollowers().add(u);
+
+        if (this.getFollowing() == null)
+            this.setFollowing(new ArrayList<>());
+        this.getFollowing().add(this);
+    }
+
+    public void removeAsignatura(UserEntity u) {
+        this.getFollowing().remove(u);
+        this.getFollowers().remove(u);
+    }
+
 
     @Override
     public String getPassword() {
