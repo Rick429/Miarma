@@ -20,9 +20,7 @@ public abstract class BaseService <T, ID, R extends JpaRepository<T, ID>>{
         return repositorio.findAll(pageable);
     }
 
-    public Optional<T> findById(ID id){
-        return repositorio.findById(id);
-    }
+    public Optional<T> findById(ID id){ return repositorio.findById(id); }
 
     public T save (T t){
         return repositorio.save(t);

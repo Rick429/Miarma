@@ -1,9 +1,9 @@
 package com.salesianostriana.dam.miarma.users.model;
 
 import com.salesianostriana.dam.miarma.model.Post;
+import com.salesianostriana.dam.miarma.model.Solicitud;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -44,17 +44,17 @@ public class UserEntity implements UserDetails {
 
     private String name;
 
-    private String lastName;
+    private String lastname;
 
     private String nick;
 
     private String email;
 
-    private LocalDate dateBirth;
+    private LocalDate datebirth;
 
     private String avatar;
 
-    private boolean isPrivate;
+    private boolean isprivate;
 
     private UserRole role;
 
@@ -64,11 +64,11 @@ public class UserEntity implements UserDetails {
     private List<UserEntity> followers;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(joinColumns = @JoinColumn(name = "user_id",
+    @JoinTable(joinColumns = @JoinColumn(name = "user_f_id",
             foreignKey = @ForeignKey(name="FK_FOLLOWING_USER")),
             inverseJoinColumns = @JoinColumn(name = "user_id",
                     foreignKey = @ForeignKey(name="FK_USER_FOLLOW")),
-            name = "follower"
+            name = "solicitudes"
     )
     private List<UserEntity> following = new ArrayList<>();
 
@@ -78,6 +78,14 @@ public class UserEntity implements UserDetails {
     @Builder.Default
     @OneToMany(mappedBy = "usuario")
     private List<Post> posts = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "solicitado", orphanRemoval = true)
+    private List<Solicitud> solicitudes = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "solicitante")
+    private List<Solicitud> solicitados = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -94,15 +102,9 @@ public class UserEntity implements UserDetails {
         this.getFollowing().add(this);
     }
 
-    public void removeAsignatura(UserEntity u) {
+    public void removeFollower(UserEntity u) {
         this.getFollowing().remove(u);
         this.getFollowers().remove(u);
-    }
-
-
-    @Override
-    public String getPassword() {
-        return null;
     }
 
     @Override
@@ -112,21 +114,21 @@ public class UserEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

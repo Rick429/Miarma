@@ -47,23 +47,8 @@ public class AuthenticationController {
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
 
-        Authentication authentication =
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(
-                                loginDto.getEmail(),
-                                loginDto.getPassword()
-                        )
-                );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = jwtProvider.generateToken(authentication);
-
-
-        UserEntity user = (UserEntity) authentication.getPrincipal();
-
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(convertUserToJwtUserResponse(user, jwt));
+                .body(loginUser(loginDto));
 
     }
 
@@ -72,12 +57,11 @@ public class AuthenticationController {
         return ResponseEntity.ok(convertUserToJwtUserResponse(user, null));
     }
 
-
     private JwtUserResponse convertUserToJwtUserResponse(UserEntity user, String jwt) {
         return JwtUserResponse.builder()
                 .nick(user.getNick())
                 .name(user.getName())
-                .lastname(user.getLastName())
+                .lastname(user.getLastname())
                 .email(user.getEmail())
                 .avatar(user.getAvatar())
                 .role(user.getRole().name())
@@ -102,6 +86,27 @@ public class AuthenticationController {
         if (saved == null)
             return ResponseEntity.badRequest().build();
         else
-            return ResponseEntity.ok(this.login(userDtoConverter.createUserDtoToLoginDto(newUser)));
+            return ResponseEntity.ok(this.loginUser(userDtoConverter.createUserDtoToLoginDto(newUser)));
+    }
+
+    private JwtUserResponse loginUser(LoginDto loginDto) {
+
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                loginDto.getNick(),
+                                loginDto.getPassword()
+                        )
+                );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = jwtProvider.generateToken(authentication);
+
+
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+
+        return convertUserToJwtUserResponse(user, jwt);
+
     }
 }

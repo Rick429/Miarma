@@ -35,10 +35,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                 UUID userId = jwtProvider.getUserIdFromJwt(token);
 
-                Optional<UserEntity> userEntity = userService.findById(userId);
+                UserEntity user = userService.findById(userId);
 
-                if (userEntity.isPresent()) {
-                    UserEntity user = userEntity.get();
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
                                     user,
@@ -47,7 +45,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                             );
                     authentication.setDetails(new WebAuthenticationDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
             }
         } catch (Exception ex) {
             log.info("No se ha podido establecer el contexto de seguridad (" + ex.getMessage() + ")");

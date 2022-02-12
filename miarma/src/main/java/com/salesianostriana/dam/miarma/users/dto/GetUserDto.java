@@ -3,19 +3,27 @@ package com.salesianostriana.dam.miarma.users.dto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter @Setter
 @Builder
-public class CreateUserDto {
+public class GetUserDto {
+
+    private UUID id;
+
+    private String name;
+
+    private String lastname;
 
     private String nick;
-    private String avatar;
-    private String name;
-    private String lastname;
+
     private String email;
-    private String password;
-    private String password2;
+
     private LocalDate datebirth;
+
+    private String avatar;
+
+    private boolean isPrivate;
 }

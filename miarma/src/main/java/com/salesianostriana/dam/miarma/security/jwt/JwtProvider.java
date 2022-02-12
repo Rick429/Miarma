@@ -21,7 +21,7 @@ public class JwtProvider {
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
 
-    @Value("${jwt.secret:clavesecretademiarmacifrada}")
+    @Value("${jwt.secret:clavesecretadelapirestdemiarmacifrada}")
     private String jwtSecret;
 
     @Value("${jwt.duration:86400}")
@@ -51,7 +51,7 @@ public class JwtProvider {
                 .setSubject(user.getId().toString())
                 .setIssuedAt(tokenExpirationDate)
                 .claim("name", user.getName())
-                .claim("lastname", user.getLastName())
+                .claim("lastname", user.getLastname())
                 .claim("role", user.getRole().name())
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
                 .compact();
