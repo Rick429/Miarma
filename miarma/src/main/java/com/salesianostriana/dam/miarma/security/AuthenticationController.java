@@ -103,7 +103,6 @@ public class AuthenticationController {
 
         String jwt = jwtProvider.generateToken(authentication);
 
-
         UserEntity user = (UserEntity) authentication.getPrincipal();
 
         return convertUserToJwtUserResponse(user, jwt);
