@@ -1,11 +1,16 @@
-package com.salesianostriana.dam.miarma.service.impl;
+package com.salesianostriana.dam.miarma.service;
 
 import com.salesianostriana.dam.miarma.dto.GetSolicitudDto;
+import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
 import com.salesianostriana.dam.miarma.model.Solicitud;
+import com.salesianostriana.dam.miarma.model.SolicitudPK;
 import com.salesianostriana.dam.miarma.repository.SolicitudRepository;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
+import com.salesianostriana.dam.miarma.users.service.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,5 +31,16 @@ public class SolicitudService {
                 .solicitadoid(s.getSolicitado().getId())
                 .solicitanteid(s.getSolicitante().getId())
                 .build();
+    }
+
+    public void removeSolicitud (SolicitudPK solicitudPK) {
+        Optional<Solicitud> s = solicitudRepository.findById(solicitudPK);
+
+        if(s.isEmpty()){
+            throw new SingleEntityNotFoundException(solicitudPK.toString(),Solicitud.class);
+        } else {
+            s.get().removeFromSolicitante(s.get().getSolicitante());
+            s.get().removeFromSolicitado(s.get().getSolicitado());
+        }
     }
 }

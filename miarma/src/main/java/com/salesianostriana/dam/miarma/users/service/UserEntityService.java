@@ -2,10 +2,9 @@ package com.salesianostriana.dam.miarma.users.service;
 
 import com.salesianostriana.dam.miarma.dto.GetSolicitudDto;
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
-import com.salesianostriana.dam.miarma.model.Solicitud;
+import com.salesianostriana.dam.miarma.model.SolicitudPK;
 import com.salesianostriana.dam.miarma.service.StorageService;
-import com.salesianostriana.dam.miarma.service.base.BaseService;
-import com.salesianostriana.dam.miarma.service.impl.SolicitudService;
+import com.salesianostriana.dam.miarma.service.SolicitudService;
 import com.salesianostriana.dam.miarma.users.dto.CreateUserDto;
 import com.salesianostriana.dam.miarma.users.dto.GetUserDto;
 import com.salesianostriana.dam.miarma.users.dto.UserDtoConverter;
@@ -13,6 +12,8 @@ import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import com.salesianostriana.dam.miarma.users.model.UserRole;
 import com.salesianostriana.dam.miarma.users.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -90,6 +91,18 @@ public class UserEntityService implements UserDetailsService {
             GetSolicitudDto solicitud = solicitudService.saveSolicitud(user, u1.get());
             return solicitud;
         }
+    }
+
+    public ResponseEntity<?> acceptFollow (UserEntity user, SolicitudPK solicitudPK) {
+        UserEntity solicitante = findById(solicitudPK.getSolicitante_id());
+        user.addFollower(solicitante);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    public ResponseEntity<?> declineFollow (SolicitudPK solicitudPK) {
+        solicitudService.removeSolicitud(solicitudPK);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
 

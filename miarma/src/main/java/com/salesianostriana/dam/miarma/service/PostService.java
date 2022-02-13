@@ -6,8 +6,10 @@ import com.salesianostriana.dam.miarma.dto.PostDtoConverter;
 import com.salesianostriana.dam.miarma.errors.exception.ListEntityNotFoundException;
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
 import com.salesianostriana.dam.miarma.model.Post;
+import com.salesianostriana.dam.miarma.model.SolicitudPK;
 import com.salesianostriana.dam.miarma.model.Tipo;
 import com.salesianostriana.dam.miarma.repository.PostRepository;
+import com.salesianostriana.dam.miarma.users.dto.GetUserDto;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import com.salesianostriana.dam.miarma.users.service.UserEntityService;
 import lombok.RequiredArgsConstructor;
@@ -100,9 +102,5 @@ public class PostService {
                 .map(postDtoConverter::postToGetPostDto)
                 .collect(Collectors.toList());
     }
-
-
-
-
 
 }
