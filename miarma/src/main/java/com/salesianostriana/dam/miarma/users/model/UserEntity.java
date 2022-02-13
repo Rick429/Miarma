@@ -81,11 +81,11 @@ public class UserEntity implements UserDetails {
     private List<Post> posts = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "solicitado", orphanRemoval = true)
+    @OneToMany(mappedBy = "solicitado",fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Solicitud> solicitudes = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "solicitante")
+    @OneToMany(mappedBy = "solicitante",fetch = FetchType.EAGER)
     private List<Solicitud> solicitados = new ArrayList<>();
 
     @Override
@@ -100,12 +100,12 @@ public class UserEntity implements UserDetails {
 
         if (this.getFollowing() == null)
             this.setFollowing(new ArrayList<>());
-        this.getFollowing().add(this);
+        u.getFollowing().add(this);
     }
 
     public void removeFollower(UserEntity u) {
-        this.getFollowing().remove(u);
         this.getFollowers().remove(u);
+        u.getFollowing().remove(this);
     }
 
     @Override

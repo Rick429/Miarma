@@ -5,6 +5,7 @@ import com.salesianostriana.dam.miarma.security.dto.LoginDto;
 import com.salesianostriana.dam.miarma.security.jwt.JwtProvider;
 import com.salesianostriana.dam.miarma.service.StorageService;
 import com.salesianostriana.dam.miarma.users.dto.CreateUserDto;
+import com.salesianostriana.dam.miarma.users.dto.GetUserDto;
 import com.salesianostriana.dam.miarma.users.dto.UserDtoConverter;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import com.salesianostriana.dam.miarma.users.model.UserRole;
@@ -25,6 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
@@ -57,7 +59,7 @@ public class AuthenticationController {
 
     @GetMapping("/me")
     public ResponseEntity<?> quienSoyYo(@AuthenticationPrincipal UserEntity user) {
-        return ResponseEntity.ok(convertUserToJwtUserResponse(user, null));
+        return ResponseEntity.ok(userDtoConverter.UserEntityToGetUserDto(user));
     }
 
     private JwtUserResponse convertUserToJwtUserResponse(UserEntity user, String jwt) {
@@ -82,13 +84,11 @@ public class AuthenticationController {
                     description = "Error en los datos",
                     content = @Content),
     })
-    @PostMapping("/auth/register/{role}")
-    public ResponseEntity<?> nuevoUsuario(@RequestPart("user") CreateUserDto newUser,
-                                          @RequestPart("avatar") MultipartFile avatar,
-                                          @PathVariable String role) {
+    @PostMapping("/auth/register")
+    public ResponseEntity<?> nuevoUsuario(@Valid @RequestPart("user") CreateUserDto newUser,
+                                          @RequestPart("avatar") MultipartFile avatar) {
 
-        UserRole userRole = UserRole.valueOf(role.toUpperCase());
-        UserEntity saved = userEntityService.save(newUser, userRole, avatar);
+        UserEntity saved = userEntityService.save(newUser, avatar);
 
         if (saved == null)
             return ResponseEntity.badRequest().build();

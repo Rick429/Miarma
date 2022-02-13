@@ -13,7 +13,6 @@ public class PostDtoConverter {
         return CreatePostDto.builder()
                 .titulo(post.getTitulo())
                 .descripcion(post.getDescripcion())
-                .archivo(post.getArchivo())
                 .tipopublicacion(post.getTipopublicacion())
                 .build();
     }
@@ -38,4 +37,5 @@ public class PostDtoConverter {
                 .userid(post.getUsuario().getId())
                 .build();
     }
+
 }

@@ -27,15 +27,15 @@ public class PostController {
     private final PostDtoConverter postDtoConverter;
 
     @PostMapping("/")
-    public ResponseEntity<CreatePostDto> createPost (@Valid @RequestPart("post") CreatePostDto c,
+    public ResponseEntity<GetPostDto> createPost (@Valid @RequestPart("post") CreatePostDto c,
                                                      @RequestPart("file")MultipartFile file,
                                                      @AuthenticationPrincipal UserEntity user) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(postDtoConverter.postToCreatePostDto(postService.save(c, file, user)));
+                .body(postDtoConverter.postToGetPostDto(postService.save(c, file, user)));
     }
 
     @PutMapping("/{id}")
-    public CreatePostDto edit(@Valid @RequestPart("post") CreatePostDto c,
+    public GetPostDto edit(@Valid @RequestPart("post") CreatePostDto c,
                               @RequestPart("file")MultipartFile file, @PathVariable Long id) {
         return postService.edit(c, file, id);
     }

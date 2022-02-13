@@ -42,7 +42,7 @@ public class PostService {
                 .createPostDtoToPost(post, uri, user));
     }
 
-    public CreatePostDto edit (CreatePostDto postDto, MultipartFile file, Long id) {
+    public GetPostDto edit (CreatePostDto postDto, MultipartFile file, Long id) {
         Optional<Post> p = postRepository.findById(id);
         if(p.isEmpty()) {
             throw new SingleEntityNotFoundException(id.toString(), Post.class);
@@ -53,7 +53,7 @@ public class PostService {
             p.get().setDescripcion(postDto.getDescripcion());
             p.get().setArchivo(uri);
             p.get().setTipopublicacion(postDto.getTipopublicacion());
-            return postDtoConverter.postToCreatePostDto(postRepository.save(p.get()));
+            return postDtoConverter.postToGetPostDto(postRepository.save(p.get()));
         }
     }
 

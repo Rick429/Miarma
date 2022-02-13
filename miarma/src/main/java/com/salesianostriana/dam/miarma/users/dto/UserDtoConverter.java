@@ -20,6 +20,7 @@ public class UserDtoConverter {
         return GetUserDto.builder()
                 .name(u.getName())
                 .lastname(u.getLastname())
+                .avatar(u.getAvatar())
                 .email(u.getEmail())
                 .nick(u.getNick())
                 .datebirth(u.getDatebirth())

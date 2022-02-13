@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/login").anonymous()
-                .antMatchers(HttpMethod.POST, "/auth/register/{role}").anonymous()
+                .antMatchers(HttpMethod.POST, "/auth/register").anonymous()
                 .antMatchers(HttpMethod.GET, "/post/{id}").hasAnyRole("ADMIN", "USER")
 
 

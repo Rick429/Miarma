@@ -2,6 +2,7 @@ package com.salesianostriana.dam.miarma.errors;
 
 import com.salesianostriana.dam.miarma.errors.exception.EntidadNoEncontradaException;
 import com.salesianostriana.dam.miarma.errors.exception.EntityExistsException;
+import com.salesianostriana.dam.miarma.errors.exception.UnauthorizedException;
 import com.salesianostriana.dam.miarma.errors.model.ApiError;
 import com.salesianostriana.dam.miarma.errors.model.ApiSubError;
 import com.salesianostriana.dam.miarma.errors.model.ApiValidationSubError;
@@ -32,6 +33,10 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler({EntityExistsException.class})
     public ResponseEntity<?> handleEntityExistsException(EntityExistsException ex, WebRequest request) {
         return buildApiError400(ex, request);
+    }
+    @ExceptionHandler({UnauthorizedException.class})
+    public ResponseEntity<?> handleUnauthorizedException(UnauthorizedException ex, WebRequest request) {
+        return buildApiError403(ex, request);
     }
 
     @ExceptionHandler({ConstraintViolationException.class})
@@ -95,6 +100,10 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
 
     private ResponseEntity<Object> buildApiError400(Exception ex, WebRequest request) {
         return buildApiErrorStatus(HttpStatus.BAD_REQUEST, ex, request);
+    }
+
+    private ResponseEntity<Object> buildApiError403(Exception ex, WebRequest request) {
+        return buildApiErrorStatus(HttpStatus.UNAUTHORIZED, ex, request);
     }
 
     private ResponseEntity<Object> buildApiError404(Exception ex, WebRequest request) {

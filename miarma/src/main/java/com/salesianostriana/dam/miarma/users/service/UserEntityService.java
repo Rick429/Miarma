@@ -1,8 +1,11 @@
 package com.salesianostriana.dam.miarma.users.service;
 
+import com.salesianostriana.dam.miarma.dto.GetSolicitudDto;
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
+import com.salesianostriana.dam.miarma.model.Solicitud;
 import com.salesianostriana.dam.miarma.service.StorageService;
 import com.salesianostriana.dam.miarma.service.base.BaseService;
+import com.salesianostriana.dam.miarma.service.impl.SolicitudService;
 import com.salesianostriana.dam.miarma.users.dto.CreateUserDto;
 import com.salesianostriana.dam.miarma.users.dto.GetUserDto;
 import com.salesianostriana.dam.miarma.users.dto.UserDtoConverter;
@@ -29,6 +32,7 @@ public class UserEntityService implements UserDetailsService {
     private final UserEntityRepository repositorio;
     private final UserDtoConverter userDtoConverter;
     private final StorageService storageService;
+    private final SolicitudService solicitudService;
 
 
     @Override
@@ -38,8 +42,7 @@ public class UserEntityService implements UserDetailsService {
     }
 
 
-    public UserEntity save(CreateUserDto newUser, UserRole role, MultipartFile avatar) {
-        if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
+    public UserEntity save(CreateUserDto newUser, MultipartFile avatar) {
             String uri = storageService.uploadImage(avatar);
             UserEntity userEntity = UserEntity.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
@@ -50,36 +53,44 @@ public class UserEntityService implements UserDetailsService {
                     .nick(newUser.getNick())
                     .email(newUser.getEmail())
                     .tipocuenta(newUser.getTipocuenta())
-                    .role(role)
+                    .role(UserRole.USER)
                     .build();
             return repositorio.save(userEntity);
-        } else {
-            return null;
-        }
     }
 
     public List<UserEntity> findUserByRole(UserRole userRole) { return repositorio.findUserByRole(userRole);}
 
     public UserEntity findById (UUID id){
-        return repositorio.findById(id).orElseThrow(() -> new SingleEntityNotFoundException(id.toString(),UserEntity.class));
+        return repositorio.findById(id)
+                .orElseThrow(() -> new SingleEntityNotFoundException(id.toString(),UserEntity.class));
     }
 
-    public GetUserDto edit (GetUserDto editUser, UserRole role) {
-            UserEntity userEntity = UserEntity.builder()
-                    .avatar(editUser.getAvatar())
-                    .name(editUser.getName())
-                    .lastname(editUser.getLastname())
-                    .datebirth(editUser.getDatebirth())
-                    .nick(editUser.getNick())
-                    .email(editUser.getEmail())
-                    .tipocuenta(editUser.getTipocuenta())
-                    .role(role)
-                    .build();
-            return userDtoConverter.UserEntityToGetUserDto(repositorio.save(userEntity));
+    public GetUserDto edit (CreateUserDto editUser,UserEntity user, MultipartFile avatar) {
+            String uri = storageService.uploadImage(avatar);
+            user.setName(editUser.getName());
+            user.setLastname(editUser.getLastname());
+            user.setAvatar(uri);
+            user.setPassword(editUser.getPassword());
+            user.setDatebirth(editUser.getDatebirth());
+            user.setTipocuenta(editUser.getTipocuenta());
+            user.setEmail(editUser.getEmail());
+            user.setNick(editUser.getNick());
+            return userDtoConverter.UserEntityToGetUserDto(repositorio.save(user));
         }
 
         public Optional<UserEntity> findFirstByNick(String nick){return repositorio.findFirstByNick(nick);}
 
+    public GetSolicitudDto followUser (UserEntity user, String nick) {
+
+        Optional<UserEntity> u1 = findFirstByNick(nick);
+        if(u1.isEmpty()){
+            throw new SingleEntityNotFoundException(nick,UserEntity.class);
+        } else {
+
+            GetSolicitudDto solicitud = solicitudService.saveSolicitud(user, u1.get());
+            return solicitud;
+        }
+    }
 }
 
 
