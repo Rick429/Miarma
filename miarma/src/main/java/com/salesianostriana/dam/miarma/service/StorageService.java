@@ -21,4 +21,6 @@ public interface StorageService {
 
     void deleteAll();
 
+    String uploadImage(MultipartFile file);
+
 }

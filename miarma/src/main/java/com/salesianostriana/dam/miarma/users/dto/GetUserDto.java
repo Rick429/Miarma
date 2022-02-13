@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.miarma.users.dto;
 
+import com.salesianostriana.dam.miarma.model.Tipo;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -25,5 +26,5 @@ public class GetUserDto {
 
     private String avatar;
 
-    private boolean isPrivate;
+    private Tipo tipocuenta;
 }

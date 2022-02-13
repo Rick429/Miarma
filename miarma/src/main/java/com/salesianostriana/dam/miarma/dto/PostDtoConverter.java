@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.miarma.dto;
 
 import com.salesianostriana.dam.miarma.model.Post;
+import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,14 +14,28 @@ public class PostDtoConverter {
                 .titulo(post.getTitulo())
                 .descripcion(post.getDescripcion())
                 .archivo(post.getArchivo())
+                .tipopublicacion(post.getTipopublicacion())
                 .build();
     }
 
-    public Post createPostDtoToPost (CreatePostDto createPostDto, String uri) {
+    public Post createPostDtoToPost (CreatePostDto createPostDto, String uri, UserEntity user) {
         return Post.builder()
                 .titulo(createPostDto.getTitulo())
                 .descripcion(createPostDto.getDescripcion())
                 .archivo(uri)
+                .tipopublicacion(createPostDto.getTipopublicacion())
+                .usuario(user)
+                .build();
+    }
+
+    public GetPostDto postToGetPostDto (Post post) {
+        return GetPostDto.builder()
+                .id(post.getId())
+                .titulo(post.getTitulo())
+                .descripcion(post.getDescripcion())
+                .archivo(post.getArchivo())
+                .tipopublicacion(post.getTipopublicacion())
+                .userid(post.getUsuario().getId())
                 .build();
     }
 }

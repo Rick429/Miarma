@@ -2,6 +2,7 @@ package com.salesianostriana.dam.miarma.users.model;
 
 import com.salesianostriana.dam.miarma.model.Post;
 import com.salesianostriana.dam.miarma.model.Solicitud;
+import com.salesianostriana.dam.miarma.model.Tipo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -54,7 +55,7 @@ public class UserEntity implements UserDetails {
 
     private String avatar;
 
-    private boolean isprivate;
+    private Tipo tipocuenta;
 
     private UserRole role;
 

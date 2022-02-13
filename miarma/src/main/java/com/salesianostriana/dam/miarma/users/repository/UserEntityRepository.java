@@ -12,5 +12,7 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, UUID> {
 
     Optional<UserEntity> findFirstByNick(String nick);
 
+    Optional<UserEntity> findUserByNick(String nick);
+
     public List<UserEntity> findUserByRole(UserRole userRole);
 }

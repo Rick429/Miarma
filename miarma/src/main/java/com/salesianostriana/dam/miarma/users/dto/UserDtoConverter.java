@@ -18,14 +18,13 @@ public class UserDtoConverter {
 
     public GetUserDto UserEntityToGetUserDto(UserEntity u) {
         return GetUserDto.builder()
-                .avatar(u.getAvatar())
                 .name(u.getName())
                 .lastname(u.getLastname())
                 .email(u.getEmail())
                 .nick(u.getNick())
                 .datebirth(u.getDatebirth())
                 .id(u.getId())
-                .isPrivate(u.isIsprivate())
+                .tipocuenta(u.getTipocuenta())
                 .build();
     }
 

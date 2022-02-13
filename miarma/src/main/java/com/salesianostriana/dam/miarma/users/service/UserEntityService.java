@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.miarma.users.service;
 
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
+import com.salesianostriana.dam.miarma.service.StorageService;
 import com.salesianostriana.dam.miarma.service.base.BaseService;
 import com.salesianostriana.dam.miarma.users.dto.CreateUserDto;
 import com.salesianostriana.dam.miarma.users.dto.GetUserDto;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,7 @@ public class UserEntityService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final UserEntityRepository repositorio;
     private final UserDtoConverter userDtoConverter;
+    private final StorageService storageService;
 
 
     @Override
@@ -35,16 +38,18 @@ public class UserEntityService implements UserDetailsService {
     }
 
 
-    public UserEntity save(CreateUserDto newUser, UserRole role) {
+    public UserEntity save(CreateUserDto newUser, UserRole role, MultipartFile avatar) {
         if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
+            String uri = storageService.uploadImage(avatar);
             UserEntity userEntity = UserEntity.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
-                    .avatar(newUser.getAvatar())
+                    .avatar(uri)
                     .name(newUser.getName())
                     .lastname(newUser.getLastname())
                     .datebirth(newUser.getDatebirth())
                     .nick(newUser.getNick())
                     .email(newUser.getEmail())
+                    .tipocuenta(newUser.getTipocuenta())
                     .role(role)
                     .build();
             return repositorio.save(userEntity);
@@ -67,11 +72,13 @@ public class UserEntityService implements UserDetailsService {
                     .datebirth(editUser.getDatebirth())
                     .nick(editUser.getNick())
                     .email(editUser.getEmail())
-                    .isprivate(editUser.isPrivate())
+                    .tipocuenta(editUser.getTipocuenta())
                     .role(role)
                     .build();
             return userDtoConverter.UserEntityToGetUserDto(repositorio.save(userEntity));
         }
+
+        public Optional<UserEntity> findFirstByNick(String nick){return repositorio.findFirstByNick(nick);}
 
 }
 

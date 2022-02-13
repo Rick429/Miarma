@@ -3,6 +3,7 @@ package com.salesianostriana.dam.miarma.security;
 import com.salesianostriana.dam.miarma.security.dto.JwtUserResponse;
 import com.salesianostriana.dam.miarma.security.dto.LoginDto;
 import com.salesianostriana.dam.miarma.security.jwt.JwtProvider;
+import com.salesianostriana.dam.miarma.service.StorageService;
 import com.salesianostriana.dam.miarma.users.dto.CreateUserDto;
 import com.salesianostriana.dam.miarma.users.dto.UserDtoConverter;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
@@ -22,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 
@@ -33,6 +35,7 @@ public class AuthenticationController {
     private final JwtProvider jwtProvider;
     private final UserEntityService userEntityService;
     private final UserDtoConverter userDtoConverter;
+    private final StorageService storageService;
 
     @Operation(summary = "Se hace login")
     @ApiResponses(value = {
@@ -80,9 +83,13 @@ public class AuthenticationController {
                     content = @Content),
     })
     @PostMapping("/auth/register/{role}")
-    public ResponseEntity<?> nuevoUsuario(@RequestBody CreateUserDto newUser, @PathVariable String role) {
+    public ResponseEntity<?> nuevoUsuario(@RequestPart("user") CreateUserDto newUser,
+                                          @RequestPart("avatar") MultipartFile avatar,
+                                          @PathVariable String role) {
+
         UserRole userRole = UserRole.valueOf(role.toUpperCase());
-        UserEntity saved = userEntityService.save(newUser, userRole);
+        UserEntity saved = userEntityService.save(newUser, userRole, avatar);
+
         if (saved == null)
             return ResponseEntity.badRequest().build();
         else

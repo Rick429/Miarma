@@ -22,6 +22,8 @@ public class Post implements Serializable {
 
     private String archivo;
 
+    private Tipo tipopublicacion;
+
     @ManyToOne
     private UserEntity usuario;
 
