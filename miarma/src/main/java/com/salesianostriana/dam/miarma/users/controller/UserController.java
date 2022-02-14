@@ -6,11 +6,17 @@ import com.salesianostriana.dam.miarma.errors.exception.UnauthorizedException;
 import com.salesianostriana.dam.miarma.model.Solicitud;
 import com.salesianostriana.dam.miarma.model.SolicitudPK;
 import com.salesianostriana.dam.miarma.model.Tipo;
+import com.salesianostriana.dam.miarma.service.SolicitudService;
 import com.salesianostriana.dam.miarma.users.dto.CreateUserDto;
 import com.salesianostriana.dam.miarma.users.dto.GetUserDto;
 import com.salesianostriana.dam.miarma.users.dto.UserDtoConverter;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import com.salesianostriana.dam.miarma.users.service.UserEntityService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +35,18 @@ public class UserController {
 
     private final UserEntityService userEntityService;
     private final UserDtoConverter userDtoConverter;
+    private final SolicitudService solicitudService;
 
+    @Operation(summary = "Usuario por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se busca un usuario por su id",
+                    content = {@Content(mediaType = "aplication/json",
+                            schema = @Schema(implementation = UserEntity.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "No existe un usuario con ese id",
+                    content = @Content),
+    })
     @GetMapping("profile/{id}")
     public GetUserDto findById(@AuthenticationPrincipal UserEntity user,@PathVariable UUID id) {
         UserEntity u1 = userEntityService.findById(id);
@@ -41,6 +58,16 @@ public class UserController {
 
     }
 
+    @Operation(summary = "Editar perfil")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se edita el perfil de un usuario",
+                    content = {@Content(mediaType = "aplication/json",
+                            schema = @Schema(implementation = UserEntity.class))}),
+            @ApiResponse(responseCode = "400",
+                    description = "Error en los datos",
+                    content = @Content),
+    })
     @PutMapping("profile/me")
     public GetUserDto edit (@RequestPart("user") CreateUserDto editUser,
                             @RequestPart("avatar") MultipartFile avatar,
@@ -48,6 +75,16 @@ public class UserController {
         return userEntityService.edit(editUser,user, avatar);
     }
 
+    @Operation(summary = "Seguir a un usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Se envia una solicitud de seguimiento a un usuario",
+                    content = {@Content(mediaType = "aplication/json",
+                            schema = @Schema(implementation = UserEntity.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "No existe un usuario con ese nick",
+                    content = @Content),
+    })
     @PostMapping("follow/{nick}")
     public GetSolicitudDto followUser (@AuthenticationPrincipal UserEntity user,
                                        @PathVariable String nick) {
@@ -56,19 +93,21 @@ public class UserController {
 
     @PostMapping("follow/accept/{id}")
     public ResponseEntity<?> acceptFollow (@AuthenticationPrincipal UserEntity user,
-                                        @RequestPart("solicitud") SolicitudPK solicitudPK ) {
+                                        @PathVariable UUID id) {
 
-        return userEntityService.acceptFollow(user, solicitudPK);
+        return userEntityService.acceptFollow(user, id);
     }
 
     @PostMapping("follow/decline/{id}")
-    public ResponseEntity<?> declineFollow () {
+    public ResponseEntity<?> declineFollow (@AuthenticationPrincipal UserEntity user,
+                                            @PathVariable UUID id ) {
+        userEntityService.declineFollow(user, id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("follow/list")
-    public List<Solicitud> findAllSolicitudes () {
-        return List.of(Solicitud.builder().build());
+    public List<GetSolicitudDto> findAllSolicitudes () {
+        return solicitudService.findAll();
     }
 
 }

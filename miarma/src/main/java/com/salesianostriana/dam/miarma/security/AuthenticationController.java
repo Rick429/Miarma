@@ -56,7 +56,13 @@ public class AuthenticationController {
                 .body(loginUser(loginDto));
 
     }
-
+    @Operation(summary = "Se muestra los datos del usuario logueado")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se hace login",
+                    content = {@Content(mediaType = "aplication/json",
+                            schema = @Schema(implementation = UserEntity.class))}),
+    })
     @GetMapping("/me")
     public ResponseEntity<?> quienSoyYo(@AuthenticationPrincipal UserEntity user) {
         return ResponseEntity.ok(userDtoConverter.UserEntityToGetUserDto(user));

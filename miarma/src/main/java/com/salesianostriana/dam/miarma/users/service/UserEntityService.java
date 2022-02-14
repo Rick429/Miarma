@@ -2,6 +2,7 @@ package com.salesianostriana.dam.miarma.users.service;
 
 import com.salesianostriana.dam.miarma.dto.GetSolicitudDto;
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
+import com.salesianostriana.dam.miarma.model.Solicitud;
 import com.salesianostriana.dam.miarma.model.SolicitudPK;
 import com.salesianostriana.dam.miarma.service.StorageService;
 import com.salesianostriana.dam.miarma.service.SolicitudService;
@@ -93,16 +94,41 @@ public class UserEntityService implements UserDetailsService {
         }
     }
 
-    public ResponseEntity<?> acceptFollow (UserEntity user, SolicitudPK solicitudPK) {
-        UserEntity solicitante = findById(solicitudPK.getSolicitante_id());
-        user.addFollower(solicitante);
+    public ResponseEntity<?> acceptFollow (UserEntity user, UUID id) {
+        SolicitudPK s = new SolicitudPK(user.getId(), id);
+        UserEntity solicitante = findById(id);
+        Optional<Solicitud> s1 = solicitudService.findById(s);
+        if(s1.isEmpty()){
+            throw new SingleEntityNotFoundException(s.toString(),Solicitud.class);
+        } else {
+            if(s1.get().getSolicitado().getId().equals(user.getId())&& s1.get().getSolicitante().getId().equals(solicitante.getId())){
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+                user.addFollower(solicitante);
+                repositorio.save(user);
+                repositorio.save(solicitante);
+                solicitudService.removeSolicitud(user.getId(),id);
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }else{
+                throw new SingleEntityNotFoundException(s.toString(),Solicitud.class);
+            }
+        }
+
     }
 
-    public ResponseEntity<?> declineFollow (SolicitudPK solicitudPK) {
-        solicitudService.removeSolicitud(solicitudPK);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    public ResponseEntity<?> declineFollow (UserEntity user, UUID id) {
+        SolicitudPK s = new SolicitudPK(user.getId(), id);
+        UserEntity solicitante = findById(id);
+        Optional<Solicitud> s1 = solicitudService.findById(s);
+        if(s1.isEmpty()){
+            throw new SingleEntityNotFoundException(s.toString(),Solicitud.class);
+        } else {
+            if (s1.get().getSolicitado().getId().equals(user.getId()) && s1.get().getSolicitante().getId().equals(solicitante.getId())) {
+                solicitudService.removeSolicitud(user.getId(), id);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            } else {
+                throw new SingleEntityNotFoundException(s.toString(), Solicitud.class);
+            }
+        }
     }
 }
 
