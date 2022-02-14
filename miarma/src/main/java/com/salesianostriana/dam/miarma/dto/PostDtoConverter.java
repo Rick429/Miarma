@@ -34,7 +34,7 @@ public class PostDtoConverter {
                 .titulo(post.getTitulo())
                 .descripcion(post.getDescripcion())
                 .archivo(post.getArchivo())
-                .archivoThumb(post.getArchivoreescalado())
+                .archivoreescalado(post.getArchivoreescalado())
                 .tipopublicacion(post.getTipopublicacion())
                 .userid(post.getUsuario().getId())
                 .build();
