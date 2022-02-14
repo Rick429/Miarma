@@ -5,6 +5,7 @@ import com.salesianostriana.dam.miarma.errors.exception.FileNotFoundException;
 import com.salesianostriana.dam.miarma.errors.exception.StorageException;
 import com.salesianostriana.dam.miarma.service.StorageService;
 import com.salesianostriana.dam.miarma.utils.MediaTypeUrlResource;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -48,15 +50,15 @@ public class FileSystemStorageService implements StorageService {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
         String newFilename = "";
         try {
-            if (file.isEmpty()){
+            if (file.isEmpty()) {
                 throw new StorageException("El fichero stá vacío");
             }
             newFilename = filename;
             while (Files.exists(rootLocation.resolve(newFilename))) {
                 String extension = StringUtils.getFilenameExtension(newFilename);
-                String name = newFilename.replace("."+extension,"");
+                String name = newFilename.replace("." + extension, "");
                 String suffix = Long.toString(System.currentTimeMillis());
-                suffix = suffix.substring(suffix.length()-6);
+                suffix = suffix.substring(suffix.length() - 6);
 
                 newFilename = name + "_" + suffix + "." + extension;
             }
@@ -65,8 +67,41 @@ public class FileSystemStorageService implements StorageService {
                         , StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException ex) {
-            throw new StorageException("Error al guardar el fichero: "+ newFilename, ex);
+            throw new StorageException("Error al guardar el fichero: " + newFilename, ex);
         }
+        return newFilename;
+    }
+
+    public String resizeStore(File file) {
+        String filename = StringUtils.cleanPath(file.getName());
+        String newFilename = "";
+        try {
+            // Si el fichero está vacío, excepción al canto
+            if (file == null)
+                throw new StorageException("El fichero subido está vacío");
+
+            newFilename = filename;
+            while (Files.exists(rootLocation.resolve(newFilename))) {
+                // Tratamos de generar uno nuevo
+                String extension = StringUtils.getFilenameExtension(newFilename);
+                String name = newFilename.replace("." + extension, "");
+                String suffix = Long.toString(System.currentTimeMillis());
+                suffix = suffix.substring(suffix.length() - 4);
+                String suffix2 = "thumbnail";
+
+                newFilename = name + "_" + suffix + suffix2 + "." + extension;
+
+            }
+            InputStream input = new FileInputStream(file);
+            try (InputStream inputStream = input) {
+                Files.copy(inputStream, rootLocation.resolve(newFilename),
+                        StandardCopyOption.REPLACE_EXISTING);
+            }
+
+        } catch (IOException ex) {
+            throw new StorageException("Error en el almacenamiento del fichero: " + newFilename, ex);
+        }
+
         return newFilename;
     }
 
@@ -93,13 +128,11 @@ public class FileSystemStorageService implements StorageService {
             MediaTypeUrlResource resource = new MediaTypeUrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
-            }
-            else {
+            } else {
                 throw new FileNotFoundException(
                         "No se pudo leer el archivo: " + filename);
             }
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             throw new FileNotFoundException("No se pudo leer el archivo: " + filename, e);
         }
     }
@@ -115,7 +148,7 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public String uploadImage (MultipartFile file) {
+    public String uploadImage(MultipartFile file) {
         String filename = store(file);
 
         String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -123,5 +156,32 @@ public class FileSystemStorageService implements StorageService {
                 .path(filename)
                 .toUriString();
         return uri;
+    }
+
+    @Override
+    public String uploadResizeImage(MultipartFile file, int target) {
+        try {
+            MultipartFile filecopy = file;
+            byte[] byteImg = Files.readAllBytes(Paths.get(filecopy.getOriginalFilename()));
+            BufferedImage original = ImageIO.read(
+                    new ByteArrayInputStream(byteImg)
+            );
+
+            BufferedImage scaled = Scalr.resize(original, target);
+
+            File f1 = new File(file.getOriginalFilename());
+
+            ImageIO.write(scaled, "jpg", f1);
+
+            String filenameThumbnail = resizeStore(f1);
+
+            String uriThumb = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/download/")
+                    .path(filenameThumbnail)
+                    .toUriString();
+            return uriThumb;
+        } catch (IOException ex) {
+            throw new StorageException("Error al leer los ficheros almacenados", ex);
+        }
     }
 }

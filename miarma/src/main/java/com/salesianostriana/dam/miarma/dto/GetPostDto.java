@@ -16,6 +16,7 @@ public class GetPostDto {
     private String titulo;
     private String descripcion;
     private String archivo;
+    private String archivoThumb;
     private Tipo tipopublicacion;
     private UUID userid;
 

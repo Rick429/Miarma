@@ -1,0 +1,10 @@
+{
+    "nick":"user1",
+    "name":"Mario",
+    "lastname":"Goméz",
+    "email":"propietario@gmail.com",
+    "tipocuenta":"PUBLICA",
+    "password":"propietario",
+    "password2":"propietario",
+    "datebirth":"2017-01-13"
+}

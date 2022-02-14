@@ -36,16 +36,14 @@ public class UserEntityService implements UserDetailsService {
     private final StorageService storageService;
     private final SolicitudService solicitudService;
 
-
     @Override
     public UserDetails loadUserByUsername(String nick) throws UsernameNotFoundException {
         return this.repositorio.findFirstByNick(nick)
                 .orElseThrow(()-> new UsernameNotFoundException(nick + " no encontrado"));
     }
 
-
     public UserEntity save(CreateUserDto newUser, MultipartFile avatar) {
-            String uri = storageService.uploadImage(avatar);
+            String uri = storageService.uploadResizeImage(avatar, 128);
             UserEntity userEntity = UserEntity.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .avatar(uri)

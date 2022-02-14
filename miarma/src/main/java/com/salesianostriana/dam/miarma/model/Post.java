@@ -22,6 +22,8 @@ public class Post implements Serializable {
 
     private String archivo;
 
+    private String archivoreescalado;
+
     private Tipo tipopublicacion;
 
     @ManyToOne

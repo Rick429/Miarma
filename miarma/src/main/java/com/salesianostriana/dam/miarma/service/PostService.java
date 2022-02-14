@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,12 +37,16 @@ public class PostService {
                 .orElseThrow(() -> new SingleEntityNotFoundException(id.toString(), Post.class));
     }
 
-    public Post save (CreatePostDto post, MultipartFile file, UserEntity user) {
+    public Post save (CreatePostDto post, MultipartFile file, UserEntity user) throws IOException {
 
         String uri = storageService.uploadImage(file);
-        
+        String uriThumb="";
+        if(file.getContentType().equals("image/jpg")){
+            uriThumb = storageService.uploadResizeImage(file, 1024);
+        }
+
         return postRepository.save(postDtoConverter
-                .createPostDtoToPost(post, uri, user));
+                .createPostDtoToPost(post, uri, uriThumb, user));
     }
 
     public GetPostDto edit (CreatePostDto postDto, MultipartFile file, Long id) {
@@ -51,9 +56,14 @@ public class PostService {
         } else {
             storageService.deleteFile(p.get().getArchivo());
             String uri = storageService.uploadImage(file);
+            String uriThumb="";
+            if(file.getContentType().equals("image/jpg")){
+                uriThumb = storageService.uploadResizeImage(file, 1024);
+            }
             p.get().setTitulo(postDto.getTitulo());
             p.get().setDescripcion(postDto.getDescripcion());
             p.get().setArchivo(uri);
+            p.get().setArchivoreescalado(uriThumb);
             p.get().setTipopublicacion(postDto.getTipopublicacion());
             return postDtoConverter.postToGetPostDto(postRepository.save(p.get()));
         }

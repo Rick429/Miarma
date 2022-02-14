@@ -17,12 +17,13 @@ public class PostDtoConverter {
                 .build();
     }
 
-    public Post createPostDtoToPost (CreatePostDto createPostDto, String uri, UserEntity user) {
+    public Post createPostDtoToPost (CreatePostDto createPostDto, String uri, String urithumb,UserEntity user) {
         return Post.builder()
                 .titulo(createPostDto.getTitulo())
                 .descripcion(createPostDto.getDescripcion())
                 .archivo(uri)
                 .tipopublicacion(createPostDto.getTipopublicacion())
+                .archivoreescalado(urithumb)
                 .usuario(user)
                 .build();
     }
@@ -33,6 +34,7 @@ public class PostDtoConverter {
                 .titulo(post.getTitulo())
                 .descripcion(post.getDescripcion())
                 .archivo(post.getArchivo())
+                .archivoThumb(post.getArchivoreescalado())
                 .tipopublicacion(post.getTipopublicacion())
                 .userid(post.getUsuario().getId())
                 .build();
