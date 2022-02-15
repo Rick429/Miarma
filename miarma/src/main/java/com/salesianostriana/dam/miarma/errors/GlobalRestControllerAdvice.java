@@ -2,6 +2,7 @@ package com.salesianostriana.dam.miarma.errors;
 
 import com.salesianostriana.dam.miarma.errors.exception.EntidadNoEncontradaException;
 import com.salesianostriana.dam.miarma.errors.exception.EntityExistsException;
+import com.salesianostriana.dam.miarma.errors.exception.FollowUserException;
 import com.salesianostriana.dam.miarma.errors.exception.UnauthorizedException;
 import com.salesianostriana.dam.miarma.errors.model.ApiError;
 import com.salesianostriana.dam.miarma.errors.model.ApiSubError;
@@ -30,7 +31,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleNotFoundException(EntidadNoEncontradaException ex, WebRequest request) {
         return buildApiError404(ex, request);
     }
-    @ExceptionHandler({EntityExistsException.class})
+    @ExceptionHandler({EntityExistsException.class, FollowUserException.class})
     public ResponseEntity<?> handleEntityExistsException(EntityExistsException ex, WebRequest request) {
         return buildApiError400(ex, request);
     }

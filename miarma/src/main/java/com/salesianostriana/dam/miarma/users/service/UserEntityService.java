@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.miarma.users.service;
 
 import com.salesianostriana.dam.miarma.dto.GetSolicitudDto;
+import com.salesianostriana.dam.miarma.errors.exception.FollowUserException;
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
 import com.salesianostriana.dam.miarma.model.Solicitud;
 import com.salesianostriana.dam.miarma.model.SolicitudPK;
@@ -13,6 +14,8 @@ import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import com.salesianostriana.dam.miarma.users.model.UserRole;
 import com.salesianostriana.dam.miarma.users.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,11 +24,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Log
 @Service("userDetailsService")
 @RequiredArgsConstructor
 public class UserEntityService implements UserDetailsService {
@@ -86,11 +89,18 @@ public class UserEntityService implements UserDetailsService {
         if(u1.isEmpty()){
             throw new SingleEntityNotFoundException(nick,UserEntity.class);
         } else {
-
-            GetSolicitudDto solicitud = solicitudService.saveSolicitud(user, u1.get());
-            return solicitud;
+            if(user.getFollowing().contains(u1.get())){
+                throw new FollowUserException("Usted ya esta siguiendo a este usuario");
+            }else if(u1.get().getId().equals(user.getId())){
+                throw new FollowUserException("No puede seguirse a usted mismo");
+            } else {
+                GetSolicitudDto solicitud = solicitudService.saveSolicitud(user, u1.get());
+                return solicitud;
+            }
         }
     }
+
+    public boolean isFollower(UserEntity follower){return repositorio.isFollower(follower);}
 
     public ResponseEntity<?> acceptFollow (UserEntity user, UUID id) {
         SolicitudPK s = new SolicitudPK(user.getId(), id);
