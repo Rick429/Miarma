@@ -3,7 +3,7 @@
     "name":"Mariano",
     "lastname":"Gonzales",
     "email":"propietario@gmail.com",
-    "tipocuenta":"PUBLICA",
+    "tipocuenta":"PRIVADA",
     "password":"propietario",
     "password2":"propietario",
     "datebirth":"2017-01-13"
