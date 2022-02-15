@@ -98,7 +98,7 @@ public class PostService {
         if(u1.isEmpty()){
             throw new SingleEntityNotFoundException(nick, UserEntity.class);
         } else {
-            if(u1.get().getFollowers().contains(user)){
+            if(u1.get().getFollowers().contains(user) || u1.get().getTipocuenta().equals(Tipo.PUBLICA)){
                 return u1.get().getPosts().stream()
                         .map(postDtoConverter::postToGetPostDto)
                         .collect(Collectors.toList());

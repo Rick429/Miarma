@@ -5,6 +5,7 @@ import com.salesianostriana.dam.miarma.errors.exception.FileNotFoundException;
 import com.salesianostriana.dam.miarma.errors.exception.StorageException;
 import com.salesianostriana.dam.miarma.service.StorageService;
 import com.salesianostriana.dam.miarma.utils.MediaTypeUrlResource;
+import lombok.extern.java.Log;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -24,7 +25,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
-
+@Log
 @Service
 public class FileSystemStorageService implements StorageService {
 
@@ -76,20 +77,16 @@ public class FileSystemStorageService implements StorageService {
         String filename = StringUtils.cleanPath(file.getName());
         String newFilename = "";
         try {
-            // Si el fichero está vacío, excepción al canto
             if (file == null)
                 throw new StorageException("El fichero subido está vacío");
 
             newFilename = filename;
             while (Files.exists(rootLocation.resolve(newFilename))) {
-                // Tratamos de generar uno nuevo
                 String extension = StringUtils.getFilenameExtension(newFilename);
                 String name = newFilename.replace("." + extension, "");
                 String suffix = Long.toString(System.currentTimeMillis());
-                suffix = suffix.substring(suffix.length() - 4);
-                String suffix2 = "thumbnail";
-
-                newFilename = name + "_" + suffix + suffix2 + "." + extension;
+                suffix = suffix.substring(suffix.length() - 6);
+                newFilename = name + "_" + suffix + "." + extension;
 
             }
             InputStream input = new FileInputStream(file);
@@ -161,20 +158,20 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public String uploadResizeImage(MultipartFile file, int target) {
         try {
-            MultipartFile filecopy = file;
-            byte[] byteImg = Files.readAllBytes(Paths.get(filecopy.getOriginalFilename()));
+
+            byte[] byteImg = Files.readAllBytes(Paths.get(file.getOriginalFilename()));
             BufferedImage original = ImageIO.read(
                     new ByteArrayInputStream(byteImg)
             );
 
             BufferedImage scaled = Scalr.resize(original, target);
 
-            File f1 = new File(file.getOriginalFilename());
+            File f1 = new File("temp",file.getOriginalFilename());
 
             ImageIO.write(scaled, "jpg", f1);
 
             String filenameThumbnail = resizeStore(f1);
-
+            
             String uriThumb = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/download/")
                     .path(filenameThumbnail)
