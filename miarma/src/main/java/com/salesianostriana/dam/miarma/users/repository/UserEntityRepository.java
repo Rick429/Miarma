@@ -19,11 +19,5 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, UUID> {
 
     boolean existsByNick(String nick);
 
-//    @Query(value = """
-//            select * from users u
-//            where follower in u.followers
-//            """)
-//    public boolean isFollower(UserEntity follower);
-
     boolean existsByEmail(String email);
 }

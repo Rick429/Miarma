@@ -136,7 +136,13 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void deleteFile(String filename) {
-
+        try {
+           String lista [] = filename.split("/");
+        Path p = Paths.get(String.valueOf(rootLocation), lista[4]);
+        Files.deleteIfExists(p);
+        } catch (IOException e) {
+            throw new FileNotFoundException("No se pudo encontrar el archivo: " + filename, e);
+        }
     }
 
     @Override
@@ -176,6 +182,8 @@ public class FileSystemStorageService implements StorageService {
                     .path("/download/")
                     .path(filenameThumbnail)
                     .toUriString();
+            Path p = Paths.get("./temp", f1.getName());
+            Files.deleteIfExists(p);
             return uriThumb;
         } catch (IOException ex) {
             throw new StorageException("Error al leer los ficheros almacenados", ex);

@@ -26,6 +26,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter @Setter
 @Builder
+@EqualsAndHashCode
 public class UserEntity implements UserDetails {
 
     @Id

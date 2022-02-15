@@ -24,6 +24,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -69,7 +70,7 @@ public class UserController {
                     content = @Content),
     })
     @PutMapping("profile/me")
-    public GetUserDto edit (@RequestPart("user") CreateUserDto editUser,
+    public GetUserDto edit (@RequestPart("user") @Valid CreateUserDto editUser,
                             @RequestPart("avatar") MultipartFile avatar,
                             @AuthenticationPrincipal UserEntity user) {
         return userEntityService.edit(editUser,user, avatar);
