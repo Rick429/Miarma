@@ -78,7 +78,7 @@ public class UserEntity implements UserDetails {
     private LocalDateTime createdAt;
 
     @Builder.Default
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
     @Builder.Default
@@ -86,7 +86,7 @@ public class UserEntity implements UserDetails {
     private List<Solicitud> solicitudes = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "solicitante",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "solicitante",fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Solicitud> solicitados = new ArrayList<>();
 
     @Override

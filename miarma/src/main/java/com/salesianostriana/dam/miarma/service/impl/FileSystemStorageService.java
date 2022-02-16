@@ -5,6 +5,10 @@ import com.salesianostriana.dam.miarma.errors.exception.FileNotFoundException;
 import com.salesianostriana.dam.miarma.errors.exception.StorageException;
 import com.salesianostriana.dam.miarma.service.StorageService;
 import com.salesianostriana.dam.miarma.utils.MediaTypeUrlResource;
+import io.github.techgnious.IVCompressor;
+import io.github.techgnious.dto.ResizeResolution;
+import io.github.techgnious.dto.VideoFormats;
+import io.github.techgnious.exception.VideoException;
 import lombok.extern.java.Log;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
+
 @Log
 @Service
 public class FileSystemStorageService implements StorageService {
@@ -137,9 +142,10 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public void deleteFile(String filename) {
         try {
-           String lista [] = filename.split("/");
-        Path p = Paths.get(String.valueOf(rootLocation), lista[4]);
-        Files.deleteIfExists(p);
+            String lista[] = filename.split("/");
+            String name = lista[lista.length - 1];
+            Path p = Paths.get(String.valueOf(rootLocation), name);
+            Files.deleteIfExists(p);
         } catch (IOException e) {
             throw new FileNotFoundException("No se pudo encontrar el archivo: " + filename, e);
         }
@@ -172,12 +178,12 @@ public class FileSystemStorageService implements StorageService {
 
             BufferedImage scaled = Scalr.resize(original, target);
 
-            File f1 = new File("temp",file.getOriginalFilename());
+            File f1 = new File("temp", file.getOriginalFilename());
 
             ImageIO.write(scaled, "jpg", f1);
 
             String filenameThumbnail = resizeStore(f1);
-            
+
             String uriThumb = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/download/")
                     .path(filenameThumbnail)
@@ -188,5 +194,34 @@ public class FileSystemStorageService implements StorageService {
         } catch (IOException ex) {
             throw new StorageException("Error al leer los ficheros almacenados", ex);
         }
+    }
+
+    public String compressVideo(MultipartFile file) {
+        byte[] video;
+        File videoFile;
+        String uri;
+        IVCompressor compressor = new IVCompressor();
+        try {
+            video = compressor.reduceVideoSize(file.getBytes(), VideoFormats.MP4, ResizeResolution.R480P);
+
+            videoFile = new File("temp", file.getOriginalFilename());
+            FileOutputStream fos = null;
+
+            fos = new FileOutputStream(videoFile);
+            fos.write(video);
+            fos.close();
+
+            String videoname = resizeStore(videoFile);
+            uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/download/")
+                    .path(videoname)
+                    .toUriString();
+            Path p = Paths.get("./temp", videoFile.getName());
+            Files.deleteIfExists(p);
+        } catch (VideoException | IOException e) {
+            throw new StorageException("Error al leer los ficheros almacenados", e);
+        }
+        return uri;
+
     }
 }

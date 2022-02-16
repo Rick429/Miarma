@@ -32,11 +32,11 @@ public class Post implements Serializable {
     private UserEntity usuario;
 
     @Builder.Default
-    @OneToMany(mappedBy = "postcomentado")
+    @OneToMany(mappedBy = "postcomentado", orphanRemoval = true)
     private List<Comment> comentarios = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "postlikeado")
+    @OneToMany(mappedBy = "postlikeado", orphanRemoval = true)
     private List<Megusta> likes = new ArrayList<>();
 
     public void addToUser(UserEntity u) {

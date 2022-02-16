@@ -33,41 +33,55 @@ public class PostService {
     private final StorageService storageService;
     private final UserEntityService userEntityService;
 
-    public Post findById (Long id){
+    public Post findById(Long id) {
         return postRepository.findById(id)
                 .orElseThrow(() -> new SingleEntityNotFoundException(id.toString(), Post.class));
     }
 
-    public Post save (CreatePostDto post, MultipartFile file, UserEntity user) throws IOException {
-        String uri = storageService.uploadImage(file);
-        String uriThumb="";
-        if(file.getContentType().equals("image/jpeg")){
-            uriThumb = storageService.uploadResizeImage(file, 1024);
+    public Post save(CreatePostDto post, MultipartFile file, UserEntity user) {
+        String uriThumb = "";
+        String uri = "";
+        if (file.getContentType().equals("video/mp4")) {
+            uri = storageService.compressVideo(file);
+        } else {
+            uri = storageService.uploadImage(file);
+
+            if (file.getContentType().equals("image/jpeg")) {
+                uriThumb = storageService.uploadResizeImage(file, 1024);
+            }
         }
 
         return postRepository.save(postDtoConverter
                 .createPostDtoToPost(post, uri, uriThumb, user));
     }
 
-    public GetPostDto edit (CreatePostDto postDto, MultipartFile file, Long id) {
+    public GetPostDto edit(CreatePostDto postDto, MultipartFile file, Long id) {
         Optional<Post> p = postRepository.findById(id);
-        if(p.isEmpty()) {
+        String name = p.get().getArchivo();
+        String namethumb = p.get().getArchivoreescalado();
+        if (p.isEmpty()) {
             throw new SingleEntityNotFoundException(id.toString(), Post.class);
         } else {
-            if(!file.isEmpty()){
-                storageService.deleteFile(p.get().getArchivo());
-                String uri = storageService.uploadImage(file);
-                p.get().setArchivo(uri);
+            if (!file.isEmpty()) {
+                storageService.deleteFile(name);
+                String uri;
+                if (file.getContentType().equals("video/mp4")) {
+                    uri = storageService.compressVideo(file);
+                    p.get().setArchivo(uri);
+                } else {
+                    uri = storageService.uploadImage(file);
+                    p.get().setArchivo(uri);
 
-                if(file.getContentType().equals("image/jpeg")){
-                    storageService.deleteFile(p.get().getArchivoreescalado());
-                    String uriThumb = storageService.uploadResizeImage(file, 1024);
-                    p.get().setArchivoreescalado(uriThumb);
+                    if (file.getContentType().equals("image/jpeg")) {
+                        if (!namethumb.isEmpty())
+                            storageService.deleteFile(namethumb);
+                        String uriThumb = storageService.uploadResizeImage(file, 1024);
+                        p.get().setArchivoreescalado(uriThumb);
+                    }
                 }
             }
             p.get().setTitulo(postDto.getTitulo());
             p.get().setDescripcion(postDto.getDescripcion());
-
             p.get().setTipopublicacion(postDto.getTipopublicacion());
             return postDtoConverter.postToGetPostDto(postRepository.save(p.get()));
         }
@@ -75,16 +89,16 @@ public class PostService {
 
     public List<GetPostDto> findAllPublic() {
         List<Post> lista = postRepository.findByTipopublicacion(Tipo.PUBLICA);
-        if(lista.isEmpty()){
+        if (lista.isEmpty()) {
             throw new ListEntityNotFoundException(Post.class);
         } else {
             return lista.stream().map(postDtoConverter::postToGetPostDto).collect(Collectors.toList());
         }
     }
 
-    public void deleteById (Long id) {
+    public void deleteById(Long id) {
         Optional<Post> p = postRepository.findById(id);
-        if(p.isEmpty()){
+        if (p.isEmpty()) {
             throw new SingleEntityNotFoundException(id.toString(), Post.class);
         } else {
             p.get().removeUser(p.get().getUsuario());
@@ -93,12 +107,12 @@ public class PostService {
         }
     }
 
-    public List<GetPostDto> findPostsByNick (UserEntity user, String nick) {
+    public List<GetPostDto> findPostsByNick(UserEntity user, String nick) {
         Optional<UserEntity> u1 = userEntityService.findFirstByNick(nick);
-        if(u1.isEmpty()){
+        if (u1.isEmpty()) {
             throw new SingleEntityNotFoundException(nick, UserEntity.class);
         } else {
-            if(u1.get().getFollowers().contains(user)){
+            if (u1.get().getFollowers().contains(user)) {
                 return u1.get().getPosts().stream()
                         .map(postDtoConverter::postToGetPostDto)
                         .collect(Collectors.toList());
@@ -111,7 +125,7 @@ public class PostService {
 
     }
 
-    public List<GetPostDto> findAllPostUserLogged (UserEntity user) {
+    public List<GetPostDto> findAllPostUserLogged(UserEntity user) {
         return postRepository.findByUsuario(user).stream()
                 .map(postDtoConverter::postToGetPostDto)
                 .collect(Collectors.toList());
