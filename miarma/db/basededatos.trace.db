@@ -9218,3 +9218,835 @@ Caused by: java.nio.channels.OverlappingFileLockException
 	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1191)
 	at org.h2.mvstore.FileStore.open(FileStore.java:163)
 	... 28 more
+2022-02-16 08:31:12 database: flush
+org.h2.message.DbException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.message.DbException.convert(DbException.java:347)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:93)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2877)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:481)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:402)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:3579)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:170)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:103)
+	at org.h2.engine.Database.getPageStore(Database.java:2659)
+	at org.h2.engine.Database.open(Database.java:675)
+	at org.h2.engine.Database.openDatabase(Database.java:307)
+	at org.h2.engine.Database.<init>(Database.java:301)
+	at org.h2.engine.Engine.openSession(Engine.java:74)
+	at org.h2.engine.Engine.openSession(Engine.java:192)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:171)
+	at org.h2.engine.Engine.createSession(Engine.java:166)
+	at org.h2.engine.Engine.createSession(Engine.java:29)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:340)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:173)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:152)
+	at org.h2.Driver.connect(Driver.java:69)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	... 33 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:950)
+	at org.h2.mvstore.FileStore.open(FileStore.java:166)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
+	... 27 more
+Caused by: java.nio.channels.OverlappingFileLockException
+	at java.base/sun.nio.ch.FileLockTable.checkList(FileLockTable.java:229)
+	at java.base/sun.nio.ch.FileLockTable.add(FileLockTable.java:123)
+	at java.base/sun.nio.ch.FileChannelImpl.tryLock(FileChannelImpl.java:1297)
+	at org.h2.store.fs.FileNio.tryLock(FilePathNio.java:121)
+	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1191)
+	at org.h2.mvstore.FileStore.open(FileStore.java:163)
+	... 28 more
+2022-02-16 08:58:24 database: flush
+org.h2.message.DbException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.message.DbException.convert(DbException.java:347)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:93)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2877)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:481)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:402)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:3579)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:170)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:103)
+	at org.h2.engine.Database.getPageStore(Database.java:2659)
+	at org.h2.engine.Database.open(Database.java:675)
+	at org.h2.engine.Database.openDatabase(Database.java:307)
+	at org.h2.engine.Database.<init>(Database.java:301)
+	at org.h2.engine.Engine.openSession(Engine.java:74)
+	at org.h2.engine.Engine.openSession(Engine.java:192)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:171)
+	at org.h2.engine.Engine.createSession(Engine.java:166)
+	at org.h2.engine.Engine.createSession(Engine.java:29)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:340)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:173)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:152)
+	at org.h2.Driver.connect(Driver.java:69)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	... 33 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:950)
+	at org.h2.mvstore.FileStore.open(FileStore.java:166)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
+	... 27 more
+Caused by: java.nio.channels.OverlappingFileLockException
+	at java.base/sun.nio.ch.FileLockTable.checkList(FileLockTable.java:229)
+	at java.base/sun.nio.ch.FileLockTable.add(FileLockTable.java:123)
+	at java.base/sun.nio.ch.FileChannelImpl.tryLock(FileChannelImpl.java:1297)
+	at org.h2.store.fs.FileNio.tryLock(FilePathNio.java:121)
+	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1191)
+	at org.h2.mvstore.FileStore.open(FileStore.java:163)
+	... 28 more
+2022-02-16 12:40:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 12:40:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; se esperaba "identifier"
+Syntax error in SQL statement "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table like (
+       id bigint not null,
+        post_id bigint,
+        user_id binary,
+        postlikeado_id bigint,
+        primary key (id)
+    ) [42001-200]
+2022-02-16 12:40:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; se esperaba "identifier"
+Syntax error in SQL statement "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; expected "identifier"; SQL statement:
+
+    alter table like 
+       add constraint FK9saa4yfug0mpnvmonsy2thptc 
+       foreign key (postlikeado_id) 
+       references post [42001-200]
+2022-02-16 12:58:22 database: flush
+org.h2.message.DbException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.message.DbException.convert(DbException.java:347)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:93)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2877)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:481)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:402)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:3579)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:170)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:103)
+	at org.h2.engine.Database.getPageStore(Database.java:2659)
+	at org.h2.engine.Database.open(Database.java:675)
+	at org.h2.engine.Database.openDatabase(Database.java:307)
+	at org.h2.engine.Database.<init>(Database.java:301)
+	at org.h2.engine.Engine.openSession(Engine.java:74)
+	at org.h2.engine.Engine.openSession(Engine.java:192)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:171)
+	at org.h2.engine.Engine.createSession(Engine.java:166)
+	at org.h2.engine.Engine.createSession(Engine.java:29)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:340)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:173)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:152)
+	at org.h2.Driver.connect(Driver.java:69)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	... 33 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:950)
+	at org.h2.mvstore.FileStore.open(FileStore.java:166)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
+	... 27 more
+Caused by: java.nio.channels.OverlappingFileLockException
+	at java.base/sun.nio.ch.FileLockTable.checkList(FileLockTable.java:229)
+	at java.base/sun.nio.ch.FileLockTable.add(FileLockTable.java:123)
+	at java.base/sun.nio.ch.FileChannelImpl.tryLock(FileChannelImpl.java:1297)
+	at org.h2.store.fs.FileNio.tryLock(FilePathNio.java:121)
+	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1191)
+	at org.h2.mvstore.FileStore.open(FileStore.java:163)
+	... 28 more
+2022-02-16 12:58:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 12:58:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 12:58:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; se esperaba "identifier"
+Syntax error in SQL statement "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table like (
+       id bigint not null,
+        post_id bigint,
+        user_id binary,
+        postlikeado_id bigint,
+        primary key (id)
+    ) [42001-200]
+2022-02-16 12:58:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; se esperaba "identifier"
+Syntax error in SQL statement "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; expected "identifier"; SQL statement:
+
+    alter table like 
+       add constraint FK9saa4yfug0mpnvmonsy2thptc 
+       foreign key (postlikeado_id) 
+       references post [42001-200]
+2022-02-16 13:19:56 database: flush
+org.h2.message.DbException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.message.DbException.convert(DbException.java:347)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:93)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2877)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:481)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:402)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:3579)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:170)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:103)
+	at org.h2.engine.Database.getPageStore(Database.java:2659)
+	at org.h2.engine.Database.open(Database.java:675)
+	at org.h2.engine.Database.openDatabase(Database.java:307)
+	at org.h2.engine.Database.<init>(Database.java:301)
+	at org.h2.engine.Engine.openSession(Engine.java:74)
+	at org.h2.engine.Engine.openSession(Engine.java:192)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:171)
+	at org.h2.engine.Engine.createSession(Engine.java:166)
+	at org.h2.engine.Engine.createSession(Engine.java:29)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:340)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:173)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:152)
+	at org.h2.Driver.connect(Driver.java:69)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	... 33 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:950)
+	at org.h2.mvstore.FileStore.open(FileStore.java:166)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
+	... 27 more
+Caused by: java.nio.channels.OverlappingFileLockException
+	at java.base/sun.nio.ch.FileLockTable.checkList(FileLockTable.java:229)
+	at java.base/sun.nio.ch.FileLockTable.add(FileLockTable.java:123)
+	at java.base/sun.nio.ch.FileChannelImpl.tryLock(FileChannelImpl.java:1297)
+	at org.h2.store.fs.FileNio.tryLock(FilePathNio.java:121)
+	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1191)
+	at org.h2.mvstore.FileStore.open(FileStore.java:163)
+	... 28 more
+2022-02-16 13:19:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 13:20:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 13:20:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; se esperaba "identifier"
+Syntax error in SQL statement "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table like (
+       id bigint not null,
+        post_id bigint,
+        user_id binary,
+        postlikeado_id bigint,
+        primary key (id)
+    ) [42001-200]
+2022-02-16 13:20:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; se esperaba "identifier"
+Syntax error in SQL statement "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; expected "identifier"; SQL statement:
+
+    alter table like 
+       add constraint FK9saa4yfug0mpnvmonsy2thptc 
+       foreign key (postlikeado_id) 
+       references post [42001-200]
+2022-02-16 13:20:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "INSERT INTO LIKE[*] (POST_ID, POSTLIKEADO_ID, USER_ID, ID) VALUES (?, ?, ?, ?)"; se esperaba "identifier"
+Syntax error in SQL statement "INSERT INTO LIKE[*] (POST_ID, POSTLIKEADO_ID, USER_ID, ID) VALUES (?, ?, ?, ?)"; expected "identifier"; SQL statement:
+insert into like (post_id, postlikeado_id, user_id, id) values (?, ?, ?, ?) [42001-200]
+2022-02-16 13:22:43 database: flush
+org.h2.message.DbException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.message.DbException.convert(DbException.java:347)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:93)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2877)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:481)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:402)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:3579)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:170)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:103)
+	at org.h2.engine.Database.getPageStore(Database.java:2659)
+	at org.h2.engine.Database.open(Database.java:675)
+	at org.h2.engine.Database.openDatabase(Database.java:307)
+	at org.h2.engine.Database.<init>(Database.java:301)
+	at org.h2.engine.Engine.openSession(Engine.java:74)
+	at org.h2.engine.Engine.openSession(Engine.java:192)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:171)
+	at org.h2.engine.Engine.createSession(Engine.java:166)
+	at org.h2.engine.Engine.createSession(Engine.java:29)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:340)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:173)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:152)
+	at org.h2.Driver.connect(Driver.java:69)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	... 33 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:950)
+	at org.h2.mvstore.FileStore.open(FileStore.java:166)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
+	... 27 more
+Caused by: java.nio.channels.OverlappingFileLockException
+	at java.base/sun.nio.ch.FileLockTable.checkList(FileLockTable.java:229)
+	at java.base/sun.nio.ch.FileLockTable.add(FileLockTable.java:123)
+	at java.base/sun.nio.ch.FileChannelImpl.tryLock(FileChannelImpl.java:1297)
+	at org.h2.store.fs.FileNio.tryLock(FilePathNio.java:121)
+	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1191)
+	at org.h2.mvstore.FileStore.open(FileStore.java:163)
+	... 28 more
+2022-02-16 13:22:44 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 13:22:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 13:22:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; se esperaba "identifier"
+Syntax error in SQL statement "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table like (
+       id bigint not null,
+        post_id bigint,
+        user_id binary,
+        postlikeado_id bigint,
+        primary key (id)
+    ) [42001-200]
+2022-02-16 13:22:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; se esperaba "identifier"
+Syntax error in SQL statement "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; expected "identifier"; SQL statement:
+
+    alter table like 
+       add constraint FK9saa4yfug0mpnvmonsy2thptc 
+       foreign key (postlikeado_id) 
+       references post [42001-200]
+2022-02-16 13:23:15 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "INSERT INTO LIKE[*] (POST_ID, POSTLIKEADO_ID, USER_ID, ID) VALUES (?, ?, ?, ?)"; se esperaba "identifier"
+Syntax error in SQL statement "INSERT INTO LIKE[*] (POST_ID, POSTLIKEADO_ID, USER_ID, ID) VALUES (?, ?, ?, ?)"; expected "identifier"; SQL statement:
+insert into like (post_id, postlikeado_id, user_id, id) values (?, ?, ?, ?) [42001-200]
+2022-02-16 13:27:33 database: flush
+org.h2.message.DbException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.message.DbException.convert(DbException.java:347)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:93)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2877)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:481)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:402)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:3579)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:170)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:103)
+	at org.h2.engine.Database.getPageStore(Database.java:2659)
+	at org.h2.engine.Database.open(Database.java:675)
+	at org.h2.engine.Database.openDatabase(Database.java:307)
+	at org.h2.engine.Database.<init>(Database.java:301)
+	at org.h2.engine.Engine.openSession(Engine.java:74)
+	at org.h2.engine.Engine.openSession(Engine.java:192)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:171)
+	at org.h2.engine.Engine.createSession(Engine.java:166)
+	at org.h2.engine.Engine.createSession(Engine.java:29)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:340)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:173)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:152)
+	at org.h2.Driver.connect(Driver.java:69)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	... 33 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:950)
+	at org.h2.mvstore.FileStore.open(FileStore.java:166)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
+	... 27 more
+Caused by: java.nio.channels.OverlappingFileLockException
+	at java.base/sun.nio.ch.FileLockTable.checkList(FileLockTable.java:229)
+	at java.base/sun.nio.ch.FileLockTable.add(FileLockTable.java:123)
+	at java.base/sun.nio.ch.FileChannelImpl.tryLock(FileChannelImpl.java:1297)
+	at org.h2.store.fs.FileNio.tryLock(FilePathNio.java:121)
+	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1191)
+	at org.h2.mvstore.FileStore.open(FileStore.java:163)
+	... 28 more
+2022-02-16 13:27:33 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 13:27:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 13:27:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; se esperaba "identifier"
+Syntax error in SQL statement "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table like (
+       id bigint not null,
+        post_id bigint,
+        user_id binary,
+        postlikeado_id bigint,
+        primary key (id)
+    ) [42001-200]
+2022-02-16 13:27:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; se esperaba "identifier"
+Syntax error in SQL statement "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; expected "identifier"; SQL statement:
+
+    alter table like 
+       add constraint FK9saa4yfug0mpnvmonsy2thptc 
+       foreign key (postlikeado_id) 
+       references post [42001-200]
+2022-02-16 13:27:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "INSERT INTO LIKE[*] (POST_ID, POSTLIKEADO_ID, USER_ID, ID) VALUES (?, ?, ?, ?)"; se esperaba "identifier"
+Syntax error in SQL statement "INSERT INTO LIKE[*] (POST_ID, POSTLIKEADO_ID, USER_ID, ID) VALUES (?, ?, ?, ?)"; expected "identifier"; SQL statement:
+insert into like (post_id, postlikeado_id, user_id, id) values (?, ?, ?, ?) [42001-200]
+2022-02-16 13:29:05 database: flush
+org.h2.message.DbException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.message.DbException.convert(DbException.java:347)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:93)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2877)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:481)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:402)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:3579)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:170)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:103)
+	at org.h2.engine.Database.getPageStore(Database.java:2659)
+	at org.h2.engine.Database.open(Database.java:675)
+	at org.h2.engine.Database.openDatabase(Database.java:307)
+	at org.h2.engine.Database.<init>(Database.java:301)
+	at org.h2.engine.Engine.openSession(Engine.java:74)
+	at org.h2.engine.Engine.openSession(Engine.java:192)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:171)
+	at org.h2.engine.Engine.createSession(Engine.java:166)
+	at org.h2.engine.Engine.createSession(Engine.java:29)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:340)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:173)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:152)
+	at org.h2.Driver.connect(Driver.java:69)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	... 33 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:950)
+	at org.h2.mvstore.FileStore.open(FileStore.java:166)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
+	... 27 more
+Caused by: java.nio.channels.OverlappingFileLockException
+	at java.base/sun.nio.ch.FileLockTable.checkList(FileLockTable.java:229)
+	at java.base/sun.nio.ch.FileLockTable.add(FileLockTable.java:123)
+	at java.base/sun.nio.ch.FileChannelImpl.tryLock(FileChannelImpl.java:1297)
+	at org.h2.store.fs.FileNio.tryLock(FilePathNio.java:121)
+	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1191)
+	at org.h2.mvstore.FileStore.open(FileStore.java:163)
+	... 28 more
+2022-02-16 13:29:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 13:29:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 13:29:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; se esperaba "identifier"
+Syntax error in SQL statement "
+    CREATE TABLE LIKE[*] (
+       ID BIGINT NOT NULL,
+        POST_ID BIGINT,
+        USER_ID BINARY,
+        POSTLIKEADO_ID BIGINT,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table like (
+       id bigint not null,
+        post_id bigint,
+        user_id binary,
+        postlikeado_id bigint,
+        primary key (id)
+    ) [42001-200]
+2022-02-16 13:29:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; se esperaba "identifier"
+Syntax error in SQL statement "
+    ALTER TABLE LIKE[*] 
+       ADD CONSTRAINT FK9SAA4YFUG0MPNVMONSY2THPTC 
+       FOREIGN KEY (POSTLIKEADO_ID) 
+       REFERENCES POST"; expected "identifier"; SQL statement:
+
+    alter table like 
+       add constraint FK9saa4yfug0mpnvmonsy2thptc 
+       foreign key (postlikeado_id) 
+       references post [42001-200]
+2022-02-16 13:29:26 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "INSERT INTO LIKE[*] (POST_ID, POSTLIKEADO_ID, USER_ID, ID) VALUES (?, ?, ?, ?)"; se esperaba "identifier"
+Syntax error in SQL statement "INSERT INTO LIKE[*] (POST_ID, POSTLIKEADO_ID, USER_ID, ID) VALUES (?, ?, ?, ?)"; expected "identifier"; SQL statement:
+insert into like (post_id, postlikeado_id, user_id, id) values (?, ?, ?, ?) [42001-200]
+2022-02-16 13:33:13 database: flush
+org.h2.message.DbException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.message.DbException.convert(DbException.java:347)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:93)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2877)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:481)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:402)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:3579)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:170)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:103)
+	at org.h2.engine.Database.getPageStore(Database.java:2659)
+	at org.h2.engine.Database.open(Database.java:675)
+	at org.h2.engine.Database.openDatabase(Database.java:307)
+	at org.h2.engine.Database.<init>(Database.java:301)
+	at org.h2.engine.Engine.openSession(Engine.java:74)
+	at org.h2.engine.Engine.openSession(Engine.java:192)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:171)
+	at org.h2.engine.Engine.createSession(Engine.java:166)
+	at org.h2.engine.Engine.createSession(Engine.java:29)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:340)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:173)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:152)
+	at org.h2.Driver.connect(Driver.java:69)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	... 33 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:950)
+	at org.h2.mvstore.FileStore.open(FileStore.java:166)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
+	... 27 more
+Caused by: java.nio.channels.OverlappingFileLockException
+	at java.base/sun.nio.ch.FileLockTable.checkList(FileLockTable.java:229)
+	at java.base/sun.nio.ch.FileLockTable.add(FileLockTable.java:123)
+	at java.base/sun.nio.ch.FileChannelImpl.tryLock(FileChannelImpl.java:1297)
+	at org.h2.store.fs.FileNio.tryLock(FilePathNio.java:121)
+	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1191)
+	at org.h2.mvstore.FileStore.open(FileStore.java:163)
+	... 28 more
+2022-02-16 13:33:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; se esperaba "identifier"
+Syntax error in SQL statement "
+    DROP TABLE IF EXISTS LIKE[*] CASCADE "; expected "identifier"; SQL statement:
+
+    drop table if exists like CASCADE  [42001-200]
+2022-02-16 13:33:40 database: flush
+org.h2.message.DbException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.message.DbException.convert(DbException.java:347)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:93)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2877)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:481)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:402)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:3579)
+	at org.h2.mvstore.db.MVTableEngine$Store.open(MVTableEngine.java:170)
+	at org.h2.mvstore.db.MVTableEngine.init(MVTableEngine.java:103)
+	at org.h2.engine.Database.getPageStore(Database.java:2659)
+	at org.h2.engine.Database.open(Database.java:675)
+	at org.h2.engine.Database.openDatabase(Database.java:307)
+	at org.h2.engine.Database.<init>(Database.java:301)
+	at org.h2.engine.Engine.openSession(Engine.java:74)
+	at org.h2.engine.Engine.openSession(Engine.java:192)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:171)
+	at org.h2.engine.Engine.createSession(Engine.java:166)
+	at org.h2.engine.Engine.createSession(Engine.java:29)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:340)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:173)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:152)
+	at org.h2.Driver.connect(Driver.java:69)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]"
+General error: "java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]" [50000-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	... 33 more
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/cespedes.peric21/Documents/Miarma/miarma/db/basededatos.mv.db [1.4.200/7]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:950)
+	at org.h2.mvstore.FileStore.open(FileStore.java:166)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
+	... 27 more
+Caused by: java.nio.channels.OverlappingFileLockException
+	at java.base/sun.nio.ch.FileLockTable.checkList(FileLockTable.java:229)
+	at java.base/sun.nio.ch.FileLockTable.add(FileLockTable.java:123)
+	at java.base/sun.nio.ch.FileChannelImpl.tryLock(FileChannelImpl.java:1297)
+	at org.h2.store.fs.FileNio.tryLock(FilePathNio.java:121)
+	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1191)
+	at org.h2.mvstore.FileStore.open(FileStore.java:163)
+	... 28 more

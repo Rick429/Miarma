@@ -98,11 +98,11 @@ public class PostService {
         if(u1.isEmpty()){
             throw new SingleEntityNotFoundException(nick, UserEntity.class);
         } else {
-            if(u1.get().getFollowers().contains(user) || u1.get().getTipocuenta().equals(Tipo.PUBLICA)){
+            if(u1.get().getFollowers().contains(user)){
                 return u1.get().getPosts().stream()
                         .map(postDtoConverter::postToGetPostDto)
                         .collect(Collectors.toList());
-            }else{
+            } else {
                 return postRepository.findByTipopublicacionAndUsuario(Tipo.PUBLICA, u1.get())
                         .stream().map(postDtoConverter::postToGetPostDto)
                         .collect(Collectors.toList());

@@ -4,6 +4,8 @@ import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -28,6 +30,14 @@ public class Post implements Serializable {
 
     @ManyToOne
     private UserEntity usuario;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "postcomentado")
+    private List<Comment> comentarios = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "postlikeado")
+    private List<Megusta> likes = new ArrayList<>();
 
     public void addToUser(UserEntity u) {
         this.usuario = u;
