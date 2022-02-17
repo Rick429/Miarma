@@ -135,7 +135,6 @@ public class UserEntityService implements UserDetailsService {
                 throw new SingleEntityNotFoundException(s.toString(), Solicitud.class);
             }
         }
-
     }
 
     public ResponseEntity<?> declineFollow(UserEntity user, UUID id) {
