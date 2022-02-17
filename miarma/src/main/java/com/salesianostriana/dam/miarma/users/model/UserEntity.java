@@ -78,7 +78,7 @@ public class UserEntity implements UserDetails {
     private LocalDateTime createdAt;
 
     @Builder.Default
-    @OneToMany(mappedBy = "usuario", orphanRemoval = true)
+    @OneToMany(mappedBy = "usuario",fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
     @Builder.Default

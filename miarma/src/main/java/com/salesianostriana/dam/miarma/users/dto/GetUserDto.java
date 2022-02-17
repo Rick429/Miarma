@@ -23,4 +23,5 @@ public class GetUserDto {
     private Tipo tipocuenta;
     private int seguidores;
     private int siguiendo;
+    private int numposts;
 }

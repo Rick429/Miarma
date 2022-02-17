@@ -3,14 +3,10 @@ package com.salesianostriana.dam.miarma.service.impl;
 import com.salesianostriana.dam.miarma.config.StorageProperties;
 import com.salesianostriana.dam.miarma.errors.exception.FileNotFoundException;
 import com.salesianostriana.dam.miarma.errors.exception.StorageException;
+import com.salesianostriana.dam.miarma.service.ConvertService;
 import com.salesianostriana.dam.miarma.service.StorageService;
 import com.salesianostriana.dam.miarma.utils.MediaTypeUrlResource;
-import io.github.techgnious.IVCompressor;
-import io.github.techgnious.dto.ResizeResolution;
-import io.github.techgnious.dto.VideoFormats;
-import io.github.techgnious.exception.VideoException;
 import lombok.extern.java.Log;
-import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -20,8 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -35,10 +29,12 @@ import java.util.stream.Stream;
 public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
+    private final ConvertService convertService;
 
     @Autowired
-    public FileSystemStorageService(StorageProperties properties) {
+    public FileSystemStorageService(StorageProperties properties, ConvertService convertService) {
         this.rootLocation = Paths.get(properties.getLocation());
+        this.convertService = convertService;
     }
 
     @PostConstruct
@@ -78,7 +74,7 @@ public class FileSystemStorageService implements StorageService {
         return newFilename;
     }
 
-    public String resizeStore(File file) {
+    public String fileStore(File file) {
         String filename = StringUtils.cleanPath(file.getName());
         String newFilename = "";
         try {
@@ -169,59 +165,40 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public String uploadResizeImage(MultipartFile file, int target) {
-        try {
 
-            byte[] byteImg = Files.readAllBytes(Paths.get(file.getOriginalFilename()));
-            BufferedImage original = ImageIO.read(
-                    new ByteArrayInputStream(byteImg)
-            );
+        File imageFile = convertService.scalrImage(file, target);
+        String filenameThumbnail = fileStore(imageFile);
 
-            BufferedImage scaled = Scalr.resize(original, target);
-
-            File f1 = new File("temp", file.getOriginalFilename());
-
-            ImageIO.write(scaled, "jpg", f1);
-
-            String filenameThumbnail = resizeStore(f1);
-
-            String uriThumb = ServletUriComponentsBuilder.fromCurrentContextPath()
+        String uriThumb = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/download/")
                     .path(filenameThumbnail)
                     .toUriString();
-            Path p = Paths.get("./temp", f1.getName());
+            Path p = Paths.get("./temp", imageFile.getName());
+        try {
             Files.deleteIfExists(p);
-            return uriThumb;
-        } catch (IOException ex) {
-            throw new StorageException("Error al leer los ficheros almacenados", ex);
+        } catch (IOException e) {
+            throw new StorageException("No se pudo eliminar el fichero", e);
         }
+        return uriThumb;
+
     }
 
-    public String compressVideo(MultipartFile file) {
-        byte[] video;
-        File videoFile;
-        String uri;
-        IVCompressor compressor = new IVCompressor();
+    @Override
+    public String uploadVideo(MultipartFile file) {
+
+        File videoFile = convertService.compressVideo(file);
+        String videoname = fileStore(videoFile);
+
+        String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(videoname)
+                .toUriString();
+        Path p = Paths.get("./temp", videoFile.getName());
         try {
-            video = compressor.reduceVideoSize(file.getBytes(), VideoFormats.MP4, ResizeResolution.R480P);
-
-            videoFile = new File("temp", file.getOriginalFilename());
-            FileOutputStream fos = null;
-
-            fos = new FileOutputStream(videoFile);
-            fos.write(video);
-            fos.close();
-
-            String videoname = resizeStore(videoFile);
-            uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/download/")
-                    .path(videoname)
-                    .toUriString();
-            Path p = Paths.get("./temp", videoFile.getName());
             Files.deleteIfExists(p);
-        } catch (VideoException | IOException e) {
-            throw new StorageException("Error al leer los ficheros almacenados", e);
+        } catch (IOException e) {
+            throw new StorageException("No se pudo eliminar el fichero", e);
         }
         return uri;
-
     }
 }

@@ -42,7 +42,7 @@ public class PostService {
         String uriThumb = "";
         String uri = "";
         if (file.getContentType().equals("video/mp4")) {
-            uri = storageService.compressVideo(file);
+            uri = storageService.uploadVideo(file);
         } else {
             uri = storageService.uploadImage(file);
 
@@ -66,8 +66,12 @@ public class PostService {
                 storageService.deleteFile(name);
                 String uri;
                 if (file.getContentType().equals("video/mp4")) {
-                    uri = storageService.compressVideo(file);
+                    uri = storageService.uploadVideo(file);
                     p.get().setArchivo(uri);
+                    if (!namethumb.isEmpty()) {
+                        storageService.deleteFile(namethumb);
+                        p.get().setArchivoreescalado("");
+                    }
                 } else {
                     uri = storageService.uploadImage(file);
                     p.get().setArchivo(uri);

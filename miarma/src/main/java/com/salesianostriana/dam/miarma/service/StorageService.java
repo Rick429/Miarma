@@ -1,11 +1,8 @@
 package com.salesianostriana.dam.miarma.service;
 
-import io.github.techgnious.exception.VideoException;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
@@ -15,9 +12,9 @@ public interface StorageService {
 
     String store(MultipartFile file);
 
-    String resizeStore(File file);
+    String fileStore(File file);
 
-    String compressVideo(MultipartFile file);
+    String uploadVideo(MultipartFile file);
 
     Stream<Path> loadAll();
 

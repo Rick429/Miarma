@@ -26,6 +26,7 @@ public class UserDtoConverter {
                 .datebirth(u.getDatebirth())
                 .siguiendo(u.getFollowing().size())
                 .seguidores(u.getFollowers().size())
+                .numposts(u.getPosts().size())
                 .id(u.getId())
                 .tipocuenta(u.getTipocuenta())
                 .build();
