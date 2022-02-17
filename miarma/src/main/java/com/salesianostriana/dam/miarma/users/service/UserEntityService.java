@@ -15,7 +15,6 @@ import com.salesianostriana.dam.miarma.users.model.UserRole;
 import com.salesianostriana.dam.miarma.users.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +23,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
