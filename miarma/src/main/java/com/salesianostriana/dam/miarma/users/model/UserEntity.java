@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,12 +20,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+
+
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Builder
 @EqualsAndHashCode
 public class UserEntity implements UserDetails {
@@ -62,31 +66,26 @@ public class UserEntity implements UserDetails {
 
     private String password;
 
-    @ManyToMany(mappedBy = "following", fetch = FetchType.EAGER)
-    private List<UserEntity> followers;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(joinColumns = @JoinColumn(name = "user_f_id",
-            foreignKey = @ForeignKey(name="FK_FOLLOWING_USER")),
-            inverseJoinColumns = @JoinColumn(name = "user_id",
-                    foreignKey = @ForeignKey(name="FK_USER_FOLLOW")),
-            name = "solicitudes"
-    )
-    private List<UserEntity> following = new ArrayList<>();
-
     @CreatedDate
     private LocalDateTime createdAt;
 
     @Builder.Default
-    @OneToMany(mappedBy = "usuario",fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "following", fetch = FetchType.LAZY)
+    private List<UserEntity> followers;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<UserEntity> following = new ArrayList<>();
+
+
     @Builder.Default
-    @OneToMany(mappedBy = "solicitado",fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "solicitado", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Solicitud> solicitudes = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "solicitante",fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "solicitante", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Solicitud> solicitados = new ArrayList<>();
 
     @Override

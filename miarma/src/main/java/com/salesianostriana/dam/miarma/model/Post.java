@@ -7,6 +7,40 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@NamedEntityGraphs(
+        @NamedEntityGraph(
+                name = "usuario-posts",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "usuario", subgraph = "subgrafo-usuario")},
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "subgrafo-usuario",
+                                attributeNodes = {@NamedAttributeNode(value = "followers", subgraph = "subgrafo-followers")}
+                        ),
+                        @NamedSubgraph(
+                                name = "subgrafo-followers",
+                                attributeNodes = {@NamedAttributeNode(value = "following", subgraph = "subgrafo-following")}
+                        ),
+                        @NamedSubgraph(
+                                name = "subgrafo-following",
+                                attributeNodes = {@NamedAttributeNode(value = "solicitados", subgraph = "subgrafo-solicitados")}
+                        ),
+                        @NamedSubgraph(
+                                name = "subgrafo-solicitados",
+                                attributeNodes = {@NamedAttributeNode(value = "solicitado", subgraph = "subgrafo-solicitado")}
+                        ),
+                        @NamedSubgraph(
+                                name = "subgrafo-solicitados",
+                                attributeNodes = {@NamedAttributeNode(value = "solicitante", subgraph = "subgrafo-solicitante")}
+                        ),
+                        @NamedSubgraph(
+                                name = "subgrafo-solicitante",
+                                attributeNodes = {@NamedAttributeNode("solicitudes")}
+                        )
+                }
+        )
+)
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,4 +82,5 @@ public class Post implements Serializable {
         u.getPosts().remove(this);
         this.usuario = null;
     }
+
 }

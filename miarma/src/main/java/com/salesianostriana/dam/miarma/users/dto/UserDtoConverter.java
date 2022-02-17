@@ -24,7 +24,7 @@ public class UserDtoConverter {
                 .email(u.getEmail())
                 .nick(u.getNick())
                 .datebirth(u.getDatebirth())
-                .siguiendo(u.getFollowing().size())
+                .siguiendo(0)
                 .seguidores(u.getFollowers().size())
                 .numposts(u.getPosts().size())
                 .id(u.getId())
