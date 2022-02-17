@@ -1,9 +1,6 @@
 package com.salesianostriana.dam.miarma.errors;
 
-import com.salesianostriana.dam.miarma.errors.exception.EntidadNoEncontradaException;
-import com.salesianostriana.dam.miarma.errors.exception.EntityExistsException;
-import com.salesianostriana.dam.miarma.errors.exception.FollowUserException;
-import com.salesianostriana.dam.miarma.errors.exception.UnauthorizedException;
+import com.salesianostriana.dam.miarma.errors.exception.*;
 import com.salesianostriana.dam.miarma.errors.model.ApiError;
 import com.salesianostriana.dam.miarma.errors.model.ApiSubError;
 import com.salesianostriana.dam.miarma.errors.model.ApiValidationSubError;
@@ -35,7 +32,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleEntityExistsException(EntityExistsException ex, WebRequest request) {
         return buildApiError400(ex, request);
     }
-    @ExceptionHandler({UnauthorizedException.class})
+    @ExceptionHandler({UnauthorizedException.class, MegustaException.class, CommentException.class})
     public ResponseEntity<?> handleUnauthorizedException(UnauthorizedException ex, WebRequest request) {
         return buildApiError403(ex, request);
     }

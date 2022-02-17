@@ -92,6 +92,16 @@ public class UserController {
         return userEntityService.followUser(user, nick);
     }
 
+    @Operation(summary = "Aceptar follow")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se acepta una solicitud de seguimiento",
+                    content = {@Content(mediaType = "aplication/json",
+                            schema = @Schema(implementation = UserEntity.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "No existe una solicitud",
+                    content = @Content),
+    })
     @PostMapping("follow/accept/{id}")
     public ResponseEntity<?> acceptFollow (@AuthenticationPrincipal UserEntity user,
                                         @PathVariable UUID id) {
@@ -99,6 +109,16 @@ public class UserController {
         return userEntityService.acceptFollow(user, id);
     }
 
+    @Operation(summary = "Rechazar follow")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se rechaza una solicitud de seguimiento",
+                    content = {@Content(mediaType = "aplication/json",
+                            schema = @Schema(implementation = UserEntity.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "No existe una solicitud",
+                    content = @Content),
+    })
     @PostMapping("follow/decline/{id}")
     public ResponseEntity<?> declineFollow (@AuthenticationPrincipal UserEntity user,
                                             @PathVariable UUID id ) {
@@ -106,6 +126,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @Operation(summary = "Listar todas las solicitudes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se listan todas las solicitudes existentes en ese momento",
+                    content = {@Content(mediaType = "aplication/json",
+                            schema = @Schema(implementation = UserEntity.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "No hay solicitudes",
+                    content = @Content),
+    })
     @GetMapping("follow/list")
     public List<GetSolicitudDto> findAllSolicitudes () {
         return solicitudService.findAll();

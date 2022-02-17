@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 
@@ -24,7 +25,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @Operation(summary = "Se crea un comentario")
+    @Operation(summary = "Crear un comentario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
                     description = "Se crea el comentario correctamente",
@@ -35,10 +36,28 @@ public class CommentController {
                     content = @Content),
     })
     @PostMapping("/{id}")
-    public ResponseEntity<GetCommentDto> createComment (@Valid @RequestPart("comment") CreateCommentDto c,
-                                                        @AuthenticationPrincipal UserEntity user,
-                                                        @PathVariable Long id){
+    public ResponseEntity<GetCommentDto> createComment(@Valid @RequestPart("comment") CreateCommentDto c,
+                                                       @AuthenticationPrincipal UserEntity user,
+                                                       @PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(commentService.save(c, user, id));
+    }
+
+    @Operation(summary = "Eliminar un comentario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Se elimina el comentario correctamente",
+                    content = {@Content(mediaType = "aplication/json",
+                            schema = @Schema(implementation = UserEntity.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado el comentario con ese id",
+                    content = @Content),
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteLike(@AuthenticationPrincipal UserEntity user,
+                                        @PathVariable Long id) {
+        commentService.delete(id, user);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .build();
     }
 }

@@ -78,7 +78,6 @@ public class UserEntityService implements UserDetailsService {
             String uri = storageService.uploadResizeImage(avatar, 128);
             user.setAvatar(uri);
         }
-
         user.setName(editUser.getName());
         user.setLastname(editUser.getLastname());
         user.setPassword(editUser.getPassword());
@@ -118,7 +117,6 @@ public class UserEntityService implements UserDetailsService {
         }
     }
 
-
     public ResponseEntity<?> acceptFollow(UserEntity user, UUID id) {
         SolicitudPK s = new SolicitudPK(user.getId(), id);
         UserEntity solicitante = findById(id);
@@ -126,8 +124,8 @@ public class UserEntityService implements UserDetailsService {
         if (s1.isEmpty()) {
             throw new SingleEntityNotFoundException(s.toString(), Solicitud.class);
         } else {
-            if (s1.get().getSolicitado().getId().equals(user.getId()) && s1.get().getSolicitante().getId().equals(solicitante.getId())) {
-
+            if (s1.get().getSolicitado().getId().equals(user.getId())
+                    && s1.get().getSolicitante().getId().equals(solicitante.getId())) {
                 user.addFollower(solicitante);
                 repositorio.save(user);
                 repositorio.save(solicitante);
@@ -147,7 +145,8 @@ public class UserEntityService implements UserDetailsService {
         if (s1.isEmpty()) {
             throw new SingleEntityNotFoundException(s.toString(), Solicitud.class);
         } else {
-            if (s1.get().getSolicitado().getId().equals(user.getId()) && s1.get().getSolicitante().getId().equals(solicitante.getId())) {
+            if (s1.get().getSolicitado().getId().equals(user.getId())
+                    && s1.get().getSolicitante().getId().equals(solicitante.getId())) {
                 solicitudService.removeSolicitud(user.getId(), id);
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             } else {

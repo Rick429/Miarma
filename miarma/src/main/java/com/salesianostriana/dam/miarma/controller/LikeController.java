@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 @RestController
@@ -35,9 +36,27 @@ public class LikeController {
                     content = @Content),
     })
     @PostMapping("/{id}")
-    public ResponseEntity<GetLikeDto> createLike (@AuthenticationPrincipal UserEntity user,
-                                                     @PathVariable Long id){
+    public ResponseEntity<GetLikeDto> createLike(@AuthenticationPrincipal UserEntity user,
+                                                 @PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(likeService.save(user, id));
+    }
+
+    @Operation(summary = "Eliminar un like")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Se elimina el like correctamente",
+                    content = {@Content(mediaType = "aplication/json",
+                            schema = @Schema(implementation = UserEntity.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado el like",
+                    content = @Content),
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteLike(@AuthenticationPrincipal UserEntity user,
+                                        @PathVariable Long id) {
+        likeService.delete(id, user);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .build();
     }
 }
