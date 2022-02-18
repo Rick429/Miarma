@@ -29,6 +29,53 @@ Para este proyecto hemos instalado las siguientes dependencias:
 - Spring Security
 - Validation
 
+## Endpoints
+
+### Auth
+
+| Method | Url | Decription |
+| ------ | --- | ---------- |
+| POST   | /auth/register | registrarse |
+| POST   | /auth/login | login |
+
+### Users
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+| GET    | /me | Obtiene el perfil del usuario logueado |
+| GET    | /profile/{id} | Obtiene un usuario por su id |
+| PUT    | /profile/me | Edita el perfil de un usuario |
+| POST   | /follow/{nick} | Se crea un petición de seguimiento al usuario con el nick dado |
+| POST   | /follow/accept/{id} | Acepta una petición de seguimiento |
+| POST   | /follow/decline/{id} | Rechaza una petición de seguimiento |
+| GET   | /follow/list | Lista todas las peticiones de seguimiento que tiene el usuario logueado |
+
+### Posts
+
+| Method | Url | Description | Sample Valid Request Body |
+| ------ | --- | ----------- | ------------------------- |
+| POST   | /post/ | Crear un post |
+| PUT    | /post/{id} | Se edita el post con el id dado |
+| DELETE | /post/{id} | Se elimina el post con el id dado |
+| GET    | /post/public | Se listan todos los posts públicos |
+| GET    | /post/{id} | Obtiene un post por su id |
+| GET    | /post/user/{nick} | Obtiene todos los posts del usuario con el nick dado |
+| GET    | /post/me | Obtiene todos los posts del usuario logueado |
+
+### Comments
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+| POST   | /comment/{postId} | Se crea un comentario en el post con el id dado |
+| DELETE | /comment/{id} | Se elimina un comentario por su id |
+
+### Like
+
+| Method | Url | Description |
+| ------ | --- | ----------- |
+| POST   | /like/{postId} | Se crea un like en el post con el id dado |
+| DELETE | /like/{id} | Se elimina un like por su id |
+
 ## Desarrollador
 
 Este proyecto ha sido realizado por:
