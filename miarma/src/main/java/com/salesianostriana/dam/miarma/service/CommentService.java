@@ -6,6 +6,7 @@ import com.salesianostriana.dam.miarma.dto.GetCommentDto;
 import com.salesianostriana.dam.miarma.errors.exception.CommentException;
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
 import com.salesianostriana.dam.miarma.model.Comment;
+import com.salesianostriana.dam.miarma.model.Post;
 import com.salesianostriana.dam.miarma.repository.CommentRepository;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,13 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final CommentDtoConverter commentDtoConverter;
+    private final PostService postService;
 
     public GetCommentDto save (CreateCommentDto comment, UserEntity user, Long postid) {
-            Comment c1 = commentRepository.save(commentDtoConverter.createCommentDtoToComment(comment, user, postid));
+        Post p = postService.findById(postid);
+        Comment c1 = commentDtoConverter.createCommentDtoToComment(comment, user, postid);
+        c1.addToPost(p);
+        commentRepository.save(c1);
         return commentDtoConverter.commentToGetCommentDto(c1);
     }
 

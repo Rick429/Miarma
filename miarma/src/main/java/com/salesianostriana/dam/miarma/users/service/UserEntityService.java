@@ -23,6 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -71,7 +72,7 @@ public class UserEntityService implements UserDetailsService {
 
     public GetUserDto edit(CreateUserDto editUser, UserEntity user, MultipartFile avatar) {
 
-        if(!avatar.isEmpty()){
+        if (!avatar.isEmpty()) {
             storageService.deleteFile(user.getAvatar());
             String uri = storageService.uploadResizeImage(avatar, 128);
             user.setAvatar(uri);
@@ -91,43 +92,43 @@ public class UserEntityService implements UserDetailsService {
     }
 
     public GetSolicitudDto followUser(UserEntity user, String nick) {
-
         Optional<UserEntity> u1 = findFirstByNick(nick);
-        SolicitudPK pk = new SolicitudPK(u1.get().getId(), user.getId());
-
         if (u1.isEmpty()) {
             throw new SingleEntityNotFoundException(nick, UserEntity.class);
         } else {
+            Optional<UserEntity> u2 = findFirstByNick(user.getNick());
+            SolicitudPK pk = new SolicitudPK(u1.get().getId(), user.getId());
             Optional<Solicitud> solicitud1 = solicitudService.findById(pk);
-            for (UserEntity u : user.getFollowing()) {
-                if (u.getId().equals(u1.get().getId())) {
-                    throw new FollowUserException("Usted ya esta siguiendo a este usuario");
-                }
+
+            if (u1.get().getFollowers().contains(u2.get())) {
+                throw new FollowUserException("Usted ya esta siguiendo a este usuario");
             }
-            if (u1.get().getId().equals(user.getId())) {
+            if (u1.get().getId().equals(u2.get().getId())) {
                 throw new FollowUserException("No puede seguirse a usted mismo");
             } else if (!solicitud1.isEmpty()) {
                 throw new FollowUserException("Ya ha enviado una solicitud al usuario: " + nick);
             } else {
-                GetSolicitudDto solicitud = solicitudService.saveSolicitud(user, u1.get());
+                GetSolicitudDto solicitud = solicitudService.saveSolicitud(u2.get(), u1.get());
                 return solicitud;
             }
         }
     }
 
     public ResponseEntity<?> acceptFollow(UserEntity user, UUID id) {
-        SolicitudPK s = new SolicitudPK(user.getId(), id);
-        UserEntity solicitante = findById(id);
+
+        Optional<UserEntity> solicitado = repositorio.findUserById(user.getId());
+        Optional<UserEntity> solicitante = repositorio.findUserById(id);
+        SolicitudPK s = new SolicitudPK(solicitado.get().getId(), id);
         Optional<Solicitud> s1 = solicitudService.findById(s);
         if (s1.isEmpty()) {
             throw new SingleEntityNotFoundException(s.toString(), Solicitud.class);
         } else {
-            if (s1.get().getSolicitado().getId().equals(user.getId())
-                    && s1.get().getSolicitante().getId().equals(solicitante.getId())) {
-                user.addFollower(solicitante);
-                repositorio.save(user);
-                repositorio.save(solicitante);
-                solicitudService.removeSolicitud(user.getId(), id);
+            if (s1.get().getSolicitado().getId().equals(solicitado.get().getId())
+                    && s1.get().getSolicitante().getId().equals(solicitante.get().getId())) {
+                solicitado.get().addFollower(solicitante.get());
+                repositorio.save(solicitado.get());
+                repositorio.save(solicitante.get());
+                solicitudService.removeSolicitud(solicitado.get().getId(), id);
                 return ResponseEntity.status(HttpStatus.OK).build();
             } else {
                 throw new SingleEntityNotFoundException(s.toString(), Solicitud.class);

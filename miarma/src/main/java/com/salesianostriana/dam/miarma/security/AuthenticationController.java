@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -65,7 +66,8 @@ public class AuthenticationController {
     })
     @GetMapping("/me")
     public ResponseEntity<?> quienSoyYo(@AuthenticationPrincipal UserEntity user) {
-        return ResponseEntity.ok(userDtoConverter.UserEntityToGetUserDto(user));
+        Optional<UserEntity> u = userEntityService.findFirstByNick(user.getNick());
+        return ResponseEntity.ok(userDtoConverter.UserEntityToGetUserDto(u.get()));
     }
 
     private JwtUserResponse convertUserToJwtUserResponse(UserEntity user, String jwt) {

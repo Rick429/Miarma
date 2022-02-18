@@ -11,6 +11,7 @@ import java.util.UUID;
 @Setter
 public class GetLikeDto {
 
+    private Long id;
     private UUID user_id;
     private Long post_id;
 

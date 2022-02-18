@@ -4,6 +4,7 @@ import com.salesianostriana.dam.miarma.dto.*;
 import com.salesianostriana.dam.miarma.errors.exception.MegustaException;
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
 import com.salesianostriana.dam.miarma.model.Megusta;
+import com.salesianostriana.dam.miarma.model.Post;
 import com.salesianostriana.dam.miarma.repository.LikeRepository;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,15 @@ public class LikeService {
 
     private final LikeRepository likeRepository;
     private final LikeDtoConverter likeDtoConverter;
+    private final PostService postService;
 
     public GetLikeDto save(UserEntity user, Long postid) {
+        Post p = postService.findById(postid);
         Megusta l1 = Megusta.builder()
                 .post_id(postid)
                 .user_id(user.getId())
                 .build();
+        l1.addToPost(p);
         likeRepository.save(l1);
         return likeDtoConverter.likeToGetLikeDto(l1);
     }

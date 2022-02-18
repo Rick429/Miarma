@@ -2,6 +2,7 @@ package com.salesianostriana.dam.miarma.service;
 
 import com.salesianostriana.dam.miarma.dto.GetSolicitudDto;
 import com.salesianostriana.dam.miarma.dto.SolicitudDtoConverter;
+import com.salesianostriana.dam.miarma.errors.exception.ListEntityNotFoundException;
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
 import com.salesianostriana.dam.miarma.model.Solicitud;
 import com.salesianostriana.dam.miarma.model.SolicitudPK;
@@ -11,6 +12,7 @@ import com.salesianostriana.dam.miarma.users.service.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,7 +42,7 @@ public class SolicitudService {
 
     public void removeSolicitud (UUID userid, UUID id) {
         SolicitudPK solicitudPK = new SolicitudPK(userid, id);
-        Optional<Solicitud> s = solicitudRepository.findById(solicitudPK);
+        Optional<Solicitud> s = solicitudRepository.findSolicitudById(solicitudPK);
 
         if(s.isEmpty()){
             throw new SingleEntityNotFoundException(id.toString(),Solicitud.class);
@@ -51,10 +53,24 @@ public class SolicitudService {
         }
     }
 
-    public List<GetSolicitudDto> findAll () {
-        return solicitudRepository.findAll().stream()
-                .map(solicitudDtoConverter::solicitudToGetSolicitudDto)
-                .collect(Collectors.toList());
+    public List<GetSolicitudDto> findAll (UUID id) {
+        List<Solicitud> lista = solicitudRepository.findAll();
+        if(lista.isEmpty()){
+            throw new ListEntityNotFoundException(Solicitud.class);
+        } else {
+            List<Solicitud> listaUser = new ArrayList<>();
+            for (Solicitud s : lista) {
+                if (s.getSolicitado().getId().equals(id)) ;
+                listaUser.add(s);
+            }
+            if (listaUser.isEmpty()) {
+                throw new ListEntityNotFoundException(Solicitud.class);
+            } else {
+                return listaUser.stream()
+                        .map(solicitudDtoConverter::solicitudToGetSolicitudDto)
+                        .collect(Collectors.toList());
+            }
+        }
     }
 
     public Optional<Solicitud> findById (SolicitudPK s) {

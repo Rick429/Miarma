@@ -7,6 +7,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedEntityGraphs(
+        @NamedEntityGraph(
+                name = "usuario-posts",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "usuario", subgraph = "subgrafo-usuario")},
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "subgrafo-usuario",
+                                attributeNodes = {@NamedAttributeNode(value = "followers", subgraph = "subgrafo-followers")}
+                        ),
+                        @NamedSubgraph(
+                                name = "subgrafo-followers",
+                                attributeNodes = {@NamedAttributeNode("following")}
+                        ),
+
+                }
+        )
+)
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,4 +66,5 @@ public class Post implements Serializable {
         u.getPosts().remove(this);
         this.usuario = null;
     }
+
 }
