@@ -129,7 +129,7 @@ public class UserController {
     @Operation(summary = "Listar todas las solicitudes")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Se listan todas las solicitudes existentes en ese momento",
+                    description = "Se listan todas las solicitudes que tiene un usuario en ese momento",
                     content = {@Content(mediaType = "aplication/json",
                             schema = @Schema(implementation = UserEntity.class))}),
             @ApiResponse(responseCode = "404",
@@ -137,8 +137,8 @@ public class UserController {
                     content = @Content),
     })
     @GetMapping("follow/list")
-    public List<GetSolicitudDto> findAllSolicitudes () {
-        return solicitudService.findAll();
+    public List<GetSolicitudDto> findAllSolicitudes (@AuthenticationPrincipal UserEntity user) {
+        return solicitudService.findAll(user.getId());
     }
 
 }

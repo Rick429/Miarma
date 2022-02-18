@@ -23,6 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -71,7 +72,7 @@ public class UserEntityService implements UserDetailsService {
 
     public GetUserDto edit(CreateUserDto editUser, UserEntity user, MultipartFile avatar) {
 
-        if(!avatar.isEmpty()){
+        if (!avatar.isEmpty()) {
             storageService.deleteFile(user.getAvatar());
             String uri = storageService.uploadResizeImage(avatar, 128);
             user.setAvatar(uri);
@@ -91,20 +92,17 @@ public class UserEntityService implements UserDetailsService {
     }
 
     public GetSolicitudDto followUser(UserEntity user, String nick) {
-
         Optional<UserEntity> u1 = findFirstByNick(nick);
-        Optional<UserEntity> u2 = findFirstByNick(user.getNick());
-        SolicitudPK pk = new SolicitudPK(u1.get().getId(), user.getId());
-
         if (u1.isEmpty()) {
             throw new SingleEntityNotFoundException(nick, UserEntity.class);
         } else {
+            Optional<UserEntity> u2 = findFirstByNick(user.getNick());
+            SolicitudPK pk = new SolicitudPK(u1.get().getId(), user.getId());
             Optional<Solicitud> solicitud1 = solicitudService.findById(pk);
 
-                if (u1.get().getFollowers().contains(u2.get())) {
-                    throw new FollowUserException("Usted ya esta siguiendo a este usuario");
-                }
-
+            if (u1.get().getFollowers().contains(u2.get())) {
+                throw new FollowUserException("Usted ya esta siguiendo a este usuario");
+            }
             if (u1.get().getId().equals(u2.get().getId())) {
                 throw new FollowUserException("No puede seguirse a usted mismo");
             } else if (!solicitud1.isEmpty()) {

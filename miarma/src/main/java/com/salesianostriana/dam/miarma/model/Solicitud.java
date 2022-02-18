@@ -8,6 +8,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+
+        @NamedEntityGraph(
+                name = "usuario-solicitud",
+                attributeNodes = {
+                        @NamedAttributeNode("solicitante"),
+                        @NamedAttributeNode("solicitado")
+                }
+
+        )
+
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter

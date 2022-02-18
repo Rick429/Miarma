@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @NamedEntityGraphs(
         @NamedEntityGraph(
                 name = "usuario-posts",
@@ -20,24 +19,9 @@ import java.util.List;
                         ),
                         @NamedSubgraph(
                                 name = "subgrafo-followers",
-                                attributeNodes = {@NamedAttributeNode(value = "following", subgraph = "subgrafo-following")}
+                                attributeNodes = {@NamedAttributeNode("following")}
                         ),
-                        @NamedSubgraph(
-                                name = "subgrafo-following",
-                                attributeNodes = {@NamedAttributeNode(value = "solicitados", subgraph = "subgrafo-solicitados")}
-                        ),
-                        @NamedSubgraph(
-                                name = "subgrafo-solicitados",
-                                attributeNodes = {@NamedAttributeNode(value = "solicitado", subgraph = "subgrafo-solicitado")}
-                        ),
-                        @NamedSubgraph(
-                                name = "subgrafo-solicitados",
-                                attributeNodes = {@NamedAttributeNode(value = "solicitante", subgraph = "subgrafo-solicitante")}
-                        ),
-                        @NamedSubgraph(
-                                name = "subgrafo-solicitante",
-                                attributeNodes = {@NamedAttributeNode("solicitudes")}
-                        )
+
                 }
         )
 )
