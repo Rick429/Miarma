@@ -40,12 +40,12 @@
 								{
 									"key": "user",
 									"type": "file",
-									"src": "/C:/Users/Intel I5/Documents/Repositorios/Miarma/miarma/Postman/user.json"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/Postman/user.json"
 								},
 								{
 									"key": "avatar",
 									"type": "file",
-									"src": "/C:/Users/Intel I5/Documents/Repositorios/Miarma/miarma/fry.jpg"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/Postman/fry.jpg"
 								}
 							]
 						},
@@ -91,7 +91,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nick\":\"usuario\",\r\n    \"password\":\"usuario\"\r\n}",
+							"raw": "{\r\n    \"nick\":\"user1\",\r\n    \"password\":\"propietario\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -190,12 +190,12 @@
 								{
 									"key": "user",
 									"type": "file",
-									"src": "/C:/Users/Intel I5/Documents/Repositorios/Miarma/miarma/Postman/useredit.json"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/Postman/useredit.json"
 								},
 								{
 									"key": "avatar",
 									"type": "file",
-									"src": "/C:/Users/Intel I5/Documents/Repositorios/Miarma/miarma/fry.jpg"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/fry.jpg"
 								}
 							]
 						},
@@ -357,12 +357,12 @@
 								{
 									"key": "post",
 									"type": "file",
-									"src": "/C:/Users/Intel I5/Documents/Repositorios/Miarma/miarma/Postman/post.json"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/Postman/post.json"
 								},
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/Intel I5/Documents/Repositorios/Miarma/miarma/post.jpg"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/Postman/fry.jpg"
 								}
 							]
 						},
@@ -401,12 +401,12 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/Intel I5/Documents/Repositorios/Miarma/miarma/Los Simpson.mp4"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/Postman/Los Simpson.mp4"
 								},
 								{
 									"key": "post",
 									"type": "file",
-									"src": "/C:/Users/Intel I5/Documents/Repositorios/Miarma/miarma/Postman/postedit.json"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/Postman/postedit.json"
 								}
 							]
 						},
@@ -596,7 +596,7 @@
 								{
 									"key": "comment",
 									"type": "file",
-									"src": "/C:/Users/Intel I5/Documents/Repositorios/Miarma/miarma/Postman/comment.json"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/Postman/comment.json"
 								}
 							]
 						},

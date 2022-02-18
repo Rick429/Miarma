@@ -53,7 +53,7 @@ public class FileSystemStorageService implements StorageService {
         String newFilename = "";
         try {
             if (file.isEmpty()) {
-                throw new StorageException("El fichero stá vacío");
+                throw new StorageException("El fichero está vacío");
             }
             newFilename = filename;
             while (Files.exists(rootLocation.resolve(newFilename))) {
