@@ -1,10 +1,10 @@
 {
-    "nick":"usereditado1",
+    "nick":"user1",
     "name":"Mariano",
     "lastname":"Gonzales",
-    "email":"emailnuevo@gmail.com",
+    "email":"usereditado1@gmail.com",
     "tipocuenta":"PRIVADA",
-    "password":"propietario",
-    "password2":"propietario",
+    "password":"usereditado",
+    "password2":"usereditado",
     "datebirth":"2017-01-13"
 }

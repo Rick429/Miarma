@@ -40,7 +40,7 @@
 								{
 									"key": "user",
 									"type": "file",
-									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/Postman/user.json"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/postman/user.json"
 								},
 								{
 									"key": "avatar",
@@ -190,12 +190,12 @@
 								{
 									"key": "user",
 									"type": "file",
-									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/Postman/useredit.json"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/postman/useredit.json"
 								},
 								{
 									"key": "avatar",
 									"type": "file",
-									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/fry.jpg"
+									"src": "/C:/Users/cespedes.peric21/Documents/Miarma/miarma/postman/fry.jpg"
 								}
 							]
 						},

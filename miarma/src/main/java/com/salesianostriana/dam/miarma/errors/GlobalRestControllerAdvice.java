@@ -28,7 +28,7 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleNotFoundException(EntidadNoEncontradaException ex, WebRequest request) {
         return buildApiError404(ex, request);
     }
-    @ExceptionHandler({EntityExistsException.class, FollowUserException.class})
+    @ExceptionHandler({EntityExistsException.class, FollowUserException.class, NaturalIdException.class})
     public ResponseEntity<?> handleEntityExistsException(EntityExistsException ex, WebRequest request) {
         return buildApiError400(ex, request);
     }

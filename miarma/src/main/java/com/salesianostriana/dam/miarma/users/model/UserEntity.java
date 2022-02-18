@@ -5,6 +5,7 @@ import com.salesianostriana.dam.miarma.model.Solicitud;
 import com.salesianostriana.dam.miarma.model.Tipo;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -52,6 +53,7 @@ public class UserEntity implements UserDetails {
 
     private String lastname;
 
+    @NaturalId
     private String nick;
 
     private String email;

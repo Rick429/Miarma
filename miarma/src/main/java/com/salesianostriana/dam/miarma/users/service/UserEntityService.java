@@ -2,12 +2,14 @@ package com.salesianostriana.dam.miarma.users.service;
 
 import com.salesianostriana.dam.miarma.dto.GetSolicitudDto;
 import com.salesianostriana.dam.miarma.errors.exception.FollowUserException;
+import com.salesianostriana.dam.miarma.errors.exception.NaturalIdException;
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
 import com.salesianostriana.dam.miarma.model.Solicitud;
 import com.salesianostriana.dam.miarma.model.SolicitudPK;
 import com.salesianostriana.dam.miarma.service.StorageService;
 import com.salesianostriana.dam.miarma.service.SolicitudService;
 import com.salesianostriana.dam.miarma.users.dto.CreateUserDto;
+import com.salesianostriana.dam.miarma.users.dto.EditUserDto;
 import com.salesianostriana.dam.miarma.users.dto.GetUserDto;
 import com.salesianostriana.dam.miarma.users.dto.UserDtoConverter;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
@@ -70,21 +72,25 @@ public class UserEntityService implements UserDetailsService {
                 .orElseThrow(() -> new SingleEntityNotFoundException(id.toString(), UserEntity.class));
     }
 
-    public GetUserDto edit(CreateUserDto editUser, UserEntity user, MultipartFile avatar) {
-
-        if (!avatar.isEmpty()) {
-            storageService.deleteFile(user.getAvatar());
-            String uri = storageService.uploadResizeImage(avatar, 128);
-            user.setAvatar(uri);
+    public GetUserDto edit(EditUserDto editUser, UserEntity user, MultipartFile avatar) {
+        if(editUser.getNick().equals(user.getNick())){
+            if (!avatar.isEmpty()) {
+                storageService.deleteFile(user.getAvatar());
+                String uri = storageService.uploadResizeImage(avatar, 128);
+                user.setAvatar(uri);
+            }
+            user.setName(editUser.getName());
+            user.setLastname(editUser.getLastname());
+            user.setPassword(editUser.getPassword());
+            user.setDatebirth(editUser.getDatebirth());
+            user.setTipocuenta(editUser.getTipocuenta());
+            user.setEmail(editUser.getEmail());
+            user.setNick(editUser.getNick());
+            return userDtoConverter.UserEntityToGetUserDto(repositorio.save(user));
+        } else {
+            throw new NaturalIdException("El nombre de usuario no puede ser modificado");
         }
-        user.setName(editUser.getName());
-        user.setLastname(editUser.getLastname());
-        user.setPassword(editUser.getPassword());
-        user.setDatebirth(editUser.getDatebirth());
-        user.setTipocuenta(editUser.getTipocuenta());
-        user.setEmail(editUser.getEmail());
-        user.setNick(editUser.getNick());
-        return userDtoConverter.UserEntityToGetUserDto(repositorio.save(user));
+
     }
 
     public Optional<UserEntity> findFirstByNick(String nick) {

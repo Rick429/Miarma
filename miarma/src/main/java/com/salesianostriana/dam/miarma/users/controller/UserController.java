@@ -8,6 +8,7 @@ import com.salesianostriana.dam.miarma.model.SolicitudPK;
 import com.salesianostriana.dam.miarma.model.Tipo;
 import com.salesianostriana.dam.miarma.service.SolicitudService;
 import com.salesianostriana.dam.miarma.users.dto.CreateUserDto;
+import com.salesianostriana.dam.miarma.users.dto.EditUserDto;
 import com.salesianostriana.dam.miarma.users.dto.GetUserDto;
 import com.salesianostriana.dam.miarma.users.dto.UserDtoConverter;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
@@ -70,7 +71,7 @@ public class UserController {
                     content = @Content),
     })
     @PutMapping("profile/me")
-    public GetUserDto edit (@RequestPart("user") @Valid CreateUserDto editUser,
+    public GetUserDto edit (@RequestPart("user") @Valid EditUserDto editUser,
                             @RequestPart("avatar") MultipartFile avatar,
                             @AuthenticationPrincipal UserEntity user) {
         return userEntityService.edit(editUser,user, avatar);
