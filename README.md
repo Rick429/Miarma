@@ -52,8 +52,8 @@ Para este proyecto hemos instalado las siguientes dependencias:
 
 ### Posts
 
-| Method | Url | Description | Sample Valid Request Body |
-| ------ | --- | ----------- | ------------------------- |
+| Method | Url | Description |
+| ------ | --- | ----------- |
 | POST   | /post/ | Crear un post |
 | PUT    | /post/{id} | Se edita el post con el id dado |
 | DELETE | /post/{id} | Se elimina el post con el id dado |
