@@ -29,6 +29,11 @@ Para este proyecto hemos instalado las siguientes dependencias:
 - Spring Security
 - Validation
 
+## Postman
+
+Para realizar la prueba de los endpoints importar la colección de postman y usar los archivos 
+que se encuentra en la carpeta postman
+
 ## Endpoints
 
 ### Auth
