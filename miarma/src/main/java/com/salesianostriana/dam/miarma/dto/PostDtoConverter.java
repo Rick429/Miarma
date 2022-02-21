@@ -5,9 +5,13 @@ import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class PostDtoConverter {
+
+    private final CommentDtoConverter commentDtoConverter;
 
     public CreatePostDto postToCreatePostDto(Post post) {
         return CreatePostDto.builder()
@@ -36,6 +40,10 @@ public class PostDtoConverter {
                 .archivo(post.getArchivo())
                 .archivoreescalado(post.getArchivoreescalado())
                 .tipopublicacion(post.getTipopublicacion())
+                .numlikes(post.getLikes().size())
+                .commentarios(post.getComentarios().stream()
+                        .map(commentDtoConverter::commentToGetCommentDto)
+                        .collect(Collectors.toList()))
                 .userid(post.getUsuario().getId())
                 .build();
     }

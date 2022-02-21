@@ -9,17 +9,23 @@ import com.salesianostriana.dam.miarma.model.Tipo;
 import com.salesianostriana.dam.miarma.service.PostService;
 import com.salesianostriana.dam.miarma.users.dto.GetUserDto;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
+import com.salesianostriana.dam.miarma.utils.PaginationLinksUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
@@ -31,6 +37,7 @@ public class PostController {
 
     private final PostService postService;
     private final PostDtoConverter postDtoConverter;
+    private final PaginationLinksUtils paginationLinksUtils;
 
 
     @Operation(summary = "Se crea un post")
@@ -94,8 +101,10 @@ public class PostController {
                     content = @Content),
     })
     @GetMapping("/public")
-    public List<GetPostDto> findAllPublic () {
-        return postService.findAllPublic();
+    public ResponseEntity<Page<GetPostDto>> findAllPublic (Pageable pageable, HttpServletRequest request) {
+        Page<GetPostDto> pagPostDto = postService.findAllPublic(pageable);
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+        return ResponseEntity.ok().header("link", paginationLinksUtils.createLinkHeader(pagPostDto, uriBuilder)).body(pagPostDto);
     }
 
     @Operation(summary = "Se busca un post por su id")

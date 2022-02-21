@@ -21,7 +21,6 @@ public class Comment implements Serializable {
     @GeneratedValue
     private Long id;
     private UUID user_id;
-    private Long post_id;
     private String comentario;
 
 

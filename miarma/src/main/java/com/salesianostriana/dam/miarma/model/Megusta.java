@@ -20,7 +20,6 @@ public class Megusta {
     @GeneratedValue
     private Long id;
     private UUID user_id;
-    private Long post_id;
 
     @ManyToOne
     private Post postlikeado;

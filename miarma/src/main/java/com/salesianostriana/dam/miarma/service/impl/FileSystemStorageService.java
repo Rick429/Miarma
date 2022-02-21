@@ -173,7 +173,7 @@ public class FileSystemStorageService implements StorageService {
                     .path("/download/")
                     .path(filenameThumbnail)
                     .toUriString();
-            Path p = Paths.get("./temp", imageFile.getName());
+            Path p = Paths.get("temp", imageFile.getName());
         try {
             Files.deleteIfExists(p);
         } catch (IOException e) {
@@ -193,7 +193,7 @@ public class FileSystemStorageService implements StorageService {
                 .path("/download/")
                 .path(videoname)
                 .toUriString();
-        Path p = Paths.get("./temp", videoFile.getName());
+        Path p = Paths.get("temp", videoFile.getName());
         try {
             Files.deleteIfExists(p);
         } catch (IOException e) {

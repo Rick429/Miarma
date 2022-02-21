@@ -23,7 +23,7 @@ public class CommentService {
 
     public GetCommentDto save (CreateCommentDto comment, UserEntity user, Long postid) {
         Post p = postService.findById(postid);
-        Comment c1 = commentDtoConverter.createCommentDtoToComment(comment, user, postid);
+        Comment c1 = commentDtoConverter.createCommentDtoToComment(comment, user);
         c1.addToPost(p);
         commentRepository.save(c1);
         return commentDtoConverter.commentToGetCommentDto(c1);

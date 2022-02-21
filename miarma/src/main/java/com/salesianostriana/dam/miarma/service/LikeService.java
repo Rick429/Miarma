@@ -23,7 +23,6 @@ public class LikeService {
     public GetLikeDto save(UserEntity user, Long postid) {
         Post p = postService.findById(postid);
         Megusta l1 = Megusta.builder()
-                .post_id(postid)
                 .user_id(user.getId())
                 .build();
         l1.addToPost(p);
