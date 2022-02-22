@@ -15,6 +15,7 @@ import java.util.UUID;
 public class GetPostDto {
 
     private Long id;
+    private String nick;
     private String titulo;
     private String descripcion;
     private String archivo;

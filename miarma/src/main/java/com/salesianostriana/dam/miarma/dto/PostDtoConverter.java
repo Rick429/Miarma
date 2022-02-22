@@ -28,6 +28,7 @@ public class PostDtoConverter {
                 .archivo(uri)
                 .tipopublicacion(createPostDto.getTipopublicacion())
                 .archivoreescalado(urithumb)
+                .nick(user.getNick())
                 .usuario(user)
                 .build();
     }
@@ -35,6 +36,7 @@ public class PostDtoConverter {
     public GetPostDto postToGetPostDto (Post post) {
         return GetPostDto.builder()
                 .id(post.getId())
+                .nick(post.getNick())
                 .titulo(post.getTitulo())
                 .descripcion(post.getDescripcion())
                 .archivo(post.getArchivo())
