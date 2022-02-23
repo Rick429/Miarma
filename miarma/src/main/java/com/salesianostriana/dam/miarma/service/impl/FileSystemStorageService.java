@@ -164,7 +164,7 @@ public class FileSystemStorageService implements StorageService {
         File imageFile = convertService.scalrImage(file, target);
         String filenameThumbnail = fileStore(imageFile);
 
-            Path p = Paths.get(imageFile.getName());
+            Path p = Paths.get( "temp", imageFile.getName());
         try {
             Files.deleteIfExists(p);
         } catch (IOException e) {
@@ -180,7 +180,7 @@ public class FileSystemStorageService implements StorageService {
         File videoFile = convertService.compressVideo(file);
         String videoname = fileStore(videoFile);
 
-        Path p = Paths.get(videoFile.getName());
+        Path p = Paths.get("temp", videoFile.getName());
         try {
             Files.deleteIfExists(p);
         } catch (IOException e) {
