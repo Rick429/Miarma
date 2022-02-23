@@ -19,6 +19,8 @@ public class Comment implements Serializable {
     private Long id;
     private UUID user_id;
     private String comentario;
+    private String nick;
+    private String image;
 
 
     @ManyToOne

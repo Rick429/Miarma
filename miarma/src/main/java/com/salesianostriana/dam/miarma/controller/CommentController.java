@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -37,10 +38,11 @@ public class CommentController {
     })
     @PostMapping("/{id}")
     public ResponseEntity<GetCommentDto> createComment(@Valid @RequestPart("comment") CreateCommentDto c,
+                                                       @RequestPart("file") MultipartFile file,
                                                        @AuthenticationPrincipal UserEntity user,
                                                        @PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(commentService.save(c, user, id));
+                .body(commentService.save(c, user, id, file));
     }
 
     @Operation(summary = "Eliminar un comentario")

@@ -47,13 +47,13 @@ public class PostService {
         if (file.getContentType().equals("video/mp4")) {
             uri = storageService.uploadVideo(file);
         } else {
-            uri = storageService.uploadImage(file);
-
-            if (file.getContentType().equals("image/jpeg")) {
+            if (file.getContentType().equals("image/jpeg") ||
+                    file.getContentType().equals("image/png") ||
+                    file.getContentType().equals("image/gif")) {
+                uri = storageService.uploadImage(file);
                 uriThumb = storageService.uploadResizeImage(file, 1024);
             }
         }
-
         return postRepository.save(postDtoConverter
                 .createPostDtoToPost(post, uri, uriThumb, user));
     }

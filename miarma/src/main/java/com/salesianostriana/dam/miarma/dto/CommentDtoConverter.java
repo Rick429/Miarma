@@ -9,10 +9,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CommentDtoConverter {
 
-    public Comment createCommentDtoToComment(CreateCommentDto comment, UserEntity user) {
+    public Comment createCommentDtoToComment(CreateCommentDto comment, UserEntity user, String uri) {
         return Comment.builder()
                 .user_id(user.getId())
                 .comentario(comment.getComentario())
+                .nick(user.getNick())
+                .image(uri)
                 .build();
     }
 
@@ -21,6 +23,8 @@ public class CommentDtoConverter {
                 .comentario(c.getComentario())
                 .post_id(c.getPostcomentado().getId())
                 .user_id(c.getUser_id())
+                .nick(c.getNick())
+                .image(c.getImage())
                 .build();
     }
 }
