@@ -48,6 +48,7 @@ public class CommentService {
             throw new SingleEntityNotFoundException(id.toString(), Comment.class);
         }else {
             if(comment.get().getUser_id().equals(user.getId())){
+                storageService.deleteFile(comment.get().getImage());
                 commentRepository.delete(comment.get());
             }else{
                 throw new CommentException("Solo el usuario que creo el comentario puede eliminarlo");
