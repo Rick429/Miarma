@@ -101,7 +101,7 @@ public class AuthenticationController {
         if (saved == null)
             return ResponseEntity.badRequest().build();
         else
-            return ResponseEntity.ok(this.loginUser(userDtoConverter.createUserDtoToLoginDto(newUser)));
+            return ResponseEntity.status(HttpStatus.CREATED).body(this.loginUser(userDtoConverter.createUserDtoToLoginDto(newUser)));
     }
 
     private JwtUserResponse loginUser(LoginDto loginDto) {
