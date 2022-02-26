@@ -33,8 +33,10 @@ import java.util.List;
 public class Post implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String nick;
 
     private String titulo;
 

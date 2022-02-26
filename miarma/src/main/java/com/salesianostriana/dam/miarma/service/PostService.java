@@ -14,6 +14,9 @@ import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import com.salesianostriana.dam.miarma.users.service.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -44,13 +47,13 @@ public class PostService {
         if (file.getContentType().equals("video/mp4")) {
             uri = storageService.uploadVideo(file);
         } else {
-            uri = storageService.uploadImage(file);
-
-            if (file.getContentType().equals("image/jpeg")) {
+            if (file.getContentType().equals("image/jpeg") ||
+                    file.getContentType().equals("image/png") ||
+                    file.getContentType().equals("image/gif")) {
+                uri = storageService.uploadImage(file);
                 uriThumb = storageService.uploadResizeImage(file, 1024);
             }
         }
-
         return postRepository.save(postDtoConverter
                 .createPostDtoToPost(post, uri, uriThumb, user));
     }
@@ -91,12 +94,13 @@ public class PostService {
         }
     }
 
-    public List<GetPostDto> findAllPublic() {
-        List<Post> lista = postRepository.findByTipopublicacion(Tipo.PUBLICA);
+    public Page<GetPostDto> findAllPublic(Pageable pageable) {
+        Page<Post> lista = postRepository.findByTipopublicacion(Tipo.PUBLICA, pageable);
         if (lista.isEmpty()) {
             throw new ListEntityNotFoundException(Post.class);
         } else {
-            return lista.stream().map(postDtoConverter::postToGetPostDto).collect(Collectors.toList());
+            List<GetPostDto>listaPag = lista.stream().map(postDtoConverter::postToGetPostDto).collect(Collectors.toList());
+            return new PageImpl<>(listaPag);
         }
     }
 

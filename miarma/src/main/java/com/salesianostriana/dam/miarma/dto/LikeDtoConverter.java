@@ -11,7 +11,6 @@ public class LikeDtoConverter {
     public GetLikeDto likeToGetLikeDto (Megusta like) {
         return GetLikeDto.builder()
                 .id(like.getId())
-                .post_id(like.getPost_id())
                 .user_id(like.getUser_id())
                 .build();
     }

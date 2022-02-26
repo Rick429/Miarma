@@ -155,12 +155,7 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public String uploadImage(MultipartFile file) {
         String filename = store(file);
-
-        String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(filename)
-                .toUriString();
-        return uri;
+        return completeUri(filename);
     }
 
     @Override
@@ -169,17 +164,13 @@ public class FileSystemStorageService implements StorageService {
         File imageFile = convertService.scalrImage(file, target);
         String filenameThumbnail = fileStore(imageFile);
 
-        String uriThumb = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/download/")
-                    .path(filenameThumbnail)
-                    .toUriString();
-            Path p = Paths.get("./temp", imageFile.getName());
+            Path p = Paths.get( "temp", imageFile.getName());
         try {
             Files.deleteIfExists(p);
         } catch (IOException e) {
             throw new StorageException("No se pudo eliminar el fichero", e);
         }
-        return uriThumb;
+        return completeUri(filenameThumbnail);
 
     }
 
@@ -189,16 +180,19 @@ public class FileSystemStorageService implements StorageService {
         File videoFile = convertService.compressVideo(file);
         String videoname = fileStore(videoFile);
 
-        String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(videoname)
-                .toUriString();
-        Path p = Paths.get("./temp", videoFile.getName());
+        Path p = Paths.get("temp", videoFile.getName());
         try {
             Files.deleteIfExists(p);
         } catch (IOException e) {
             throw new StorageException("No se pudo eliminar el fichero", e);
         }
-        return uri;
+        return completeUri(videoname);
+    }
+
+    private String completeUri(String filename) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(filename)
+                .toUriString();
     }
 }

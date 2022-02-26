@@ -3,10 +3,7 @@ package com.salesianostriana.dam.miarma.model;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -18,11 +15,12 @@ import java.util.UUID;
 public class Comment implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private UUID user_id;
-    private Long post_id;
     private String comentario;
+    private String nick;
+    private String image;
 
 
     @ManyToOne

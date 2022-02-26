@@ -49,7 +49,7 @@ public class ConvertServiceImpl implements ConvertService {
     public File scalrImage(MultipartFile file, int target) {
         File imagenFile;
         try {
-            byte[] byteImg = Files.readAllBytes(Paths.get(".\\postman\\", file.getOriginalFilename()));
+            byte[] byteImg = file.getBytes();
             BufferedImage original = ImageIO.read(
                     new ByteArrayInputStream(byteImg)
             );
