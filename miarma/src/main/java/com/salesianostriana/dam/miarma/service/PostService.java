@@ -115,19 +115,22 @@ public class PostService {
         }
     }
 
-    public List<GetPostDto> findPostsByNick(UserEntity user, String nick) {
+    public Page<GetPostDto> findPostsByNick(UserEntity user, String nick, Pageable pageable) {
         Optional<UserEntity> u1 = userEntityService.findFirstByNick(nick);
         if (u1.isEmpty()) {
             throw new SingleEntityNotFoundException(nick, UserEntity.class);
         } else {
             if (u1.get().getFollowers().contains(user)) {
-                return u1.get().getPosts().stream()
+                List<GetPostDto>listaPag = u1.get().getPosts().stream()
                         .map(postDtoConverter::postToGetPostDto)
                         .collect(Collectors.toList());
+                return new PageImpl<>(listaPag);
             } else {
-                return postRepository.findByTipopublicacionAndUsuario(Tipo.PUBLICA, u1.get())
+                List<GetPostDto>listaPag = postRepository.findByTipopublicacionAndUsuario(Tipo.PUBLICA, u1.get())
                         .stream().map(postDtoConverter::postToGetPostDto)
                         .collect(Collectors.toList());
+
+                return new PageImpl<>(listaPag);
             }
         }
 

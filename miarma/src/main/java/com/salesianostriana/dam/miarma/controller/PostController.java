@@ -140,10 +140,12 @@ public class PostController {
                     content = @Content),
     })
     @GetMapping("/user/{nick}")
-    public List<GetPostDto> findAllPostByNick (@AuthenticationPrincipal UserEntity user,
-                                         @PathVariable String nick) {
+    public ResponseEntity<Page<GetPostDto>> findAllPostByNick (@AuthenticationPrincipal UserEntity user,
+                                         @PathVariable String nick, Pageable pageable, HttpServletRequest request) {
 
-        return postService.findPostsByNick(user, nick);
+        Page<GetPostDto> pagPostDto = postService.findPostsByNick(user, nick, pageable);
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+        return ResponseEntity.ok().header("link", paginationLinksUtils.createLinkHeader(pagPostDto, uriBuilder)).body(pagPostDto);
     }
 
     @Operation(summary = "Listar todos los posts del usario logueado")
