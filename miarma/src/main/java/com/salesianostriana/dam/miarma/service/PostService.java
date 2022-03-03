@@ -136,10 +136,11 @@ public class PostService {
 
     }
 
-    public List<GetPostDto> findAllPostUserLogged(UserEntity user) {
-        return postRepository.findByUsuario(user).stream()
+    public Page<GetPostDto> findAllPostUserLogged(UserEntity user, Pageable pageable) {
+        List <GetPostDto> listaPag = postRepository.findByUsuario(user).stream()
                 .map(postDtoConverter::postToGetPostDto)
                 .collect(Collectors.toList());
+        return new PageImpl<>(listaPag);
     }
 
 }

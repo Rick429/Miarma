@@ -159,7 +159,9 @@ public class PostController {
                     content = @Content),
     })
     @GetMapping("/me")
-    public List<GetPostDto> findAllPostUserLogged (@AuthenticationPrincipal UserEntity user) {
-        return postService.findAllPostUserLogged(user);
+    public ResponseEntity<Page<GetPostDto>> findAllPostUserLogged (@AuthenticationPrincipal UserEntity user, Pageable pageable, HttpServletRequest request) {
+        Page<GetPostDto> pagPostDto = postService.findAllPostUserLogged(user, pageable);
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+        return ResponseEntity.ok().header("link", paginationLinksUtils.createLinkHeader(pagPostDto, uriBuilder)).body(pagPostDto);
     }
 }
