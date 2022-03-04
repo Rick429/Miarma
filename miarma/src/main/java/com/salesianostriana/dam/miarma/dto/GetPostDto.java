@@ -24,5 +24,6 @@ public class GetPostDto {
     private List<GetCommentDto> commentarios;
     private int numlikes;
     private UUID userid;
+    private String avataruser;
 
 }

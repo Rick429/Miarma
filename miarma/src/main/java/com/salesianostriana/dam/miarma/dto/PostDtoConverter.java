@@ -47,6 +47,7 @@ public class PostDtoConverter {
                         .map(commentDtoConverter::commentToGetCommentDto)
                         .collect(Collectors.toList()))
                 .userid(post.getUsuario().getId())
+                .avataruser(post.getUsuario().getAvatar())
                 .build();
     }
 
