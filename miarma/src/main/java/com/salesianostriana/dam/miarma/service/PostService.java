@@ -143,4 +143,11 @@ public class PostService {
         return new PageImpl<>(listaPag);
     }
 
+    public Page<GetPostDto> findAllPosts(UserEntity user, Pageable pageable) {
+        List <GetPostDto> listaPag = postRepository.findAll(pageable).stream()
+                .map(postDtoConverter::postToGetPostDto)
+                .collect(Collectors.toList());
+        return new PageImpl<>(listaPag);
+    }
+
 }

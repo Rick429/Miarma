@@ -164,4 +164,12 @@ public class PostController {
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
         return ResponseEntity.ok().header("link", paginationLinksUtils.createLinkHeader(pagPostDto, uriBuilder)).body(pagPostDto);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<Page<GetPostDto>> findAllPosts (@AuthenticationPrincipal UserEntity user, Pageable pageable, HttpServletRequest request) {
+        Page<GetPostDto> pagPostDto = postService.findAllPosts(user, pageable);
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+        return ResponseEntity.ok().header("link", paginationLinksUtils.createLinkHeader(pagPostDto, uriBuilder)).body(pagPostDto);
+    }
+
 }

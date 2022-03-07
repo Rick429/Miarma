@@ -4,6 +4,7 @@ import com.salesianostriana.dam.miarma.dto.GetSolicitudDto;
 import com.salesianostriana.dam.miarma.errors.exception.FollowUserException;
 import com.salesianostriana.dam.miarma.errors.exception.NaturalIdException;
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
+import com.salesianostriana.dam.miarma.errors.exception.UnauthorizedException;
 import com.salesianostriana.dam.miarma.model.Solicitud;
 import com.salesianostriana.dam.miarma.model.SolicitudPK;
 import com.salesianostriana.dam.miarma.service.StorageService;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -156,6 +158,19 @@ public class UserEntityService implements UserDetailsService {
             } else {
                 throw new SingleEntityNotFoundException(s.toString(), Solicitud.class);
             }
+        }
+    }
+
+    public void giveAdminRol(UserEntity user, UUID id) {
+        if (user.getRole().equals(UserRole.ADMIN)) {
+            Optional<UserEntity> u1 = repositorio.findById(id);
+            if(u1.isEmpty()){
+                throw new SingleEntityNotFoundException(id.toString(), UserEntity.class);
+            } else {
+                u1.get().setRole(UserRole.ADMIN);
+            }
+        } else {
+            throw new UnauthorizedException("No tiene permisos para realizar esta acción");
         }
     }
 }
