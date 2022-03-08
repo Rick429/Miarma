@@ -110,7 +110,9 @@ public class PostService {
             throw new SingleEntityNotFoundException(id.toString(), Post.class);
         } else {
             p.get().removeUser(p.get().getUsuario());
-            storageService.deleteFile(p.get().getArchivo());
+            if(p.get().getArchivo().contains("http://localhost:8080")){
+                storageService.deleteFile(p.get().getArchivo());
+            }
             postRepository.deleteById(id);
         }
     }

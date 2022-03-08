@@ -29,6 +29,7 @@ public class UserDtoConverter {
                 .numposts(u.getPosts().size())
                 .id(u.getId())
                 .tipocuenta(u.getTipocuenta())
+                .role(u.getRole())
                 .build();
     }
 

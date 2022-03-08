@@ -3,16 +3,15 @@ package com.salesianostriana.dam.miarma.users.controller;
 import com.salesianostriana.dam.miarma.dto.GetSolicitudDto;
 import com.salesianostriana.dam.miarma.errors.exception.SingleEntityNotFoundException;
 import com.salesianostriana.dam.miarma.errors.exception.UnauthorizedException;
-import com.salesianostriana.dam.miarma.model.Solicitud;
-import com.salesianostriana.dam.miarma.model.SolicitudPK;
 import com.salesianostriana.dam.miarma.model.Tipo;
 import com.salesianostriana.dam.miarma.service.SolicitudService;
-import com.salesianostriana.dam.miarma.users.dto.CreateUserDto;
 import com.salesianostriana.dam.miarma.users.dto.EditUserDto;
 import com.salesianostriana.dam.miarma.users.dto.GetUserDto;
 import com.salesianostriana.dam.miarma.users.dto.UserDtoConverter;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
+import com.salesianostriana.dam.miarma.users.model.UserRole;
 import com.salesianostriana.dam.miarma.users.service.UserEntityService;
+import com.salesianostriana.dam.miarma.utils.PaginationLinksUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,7 +23,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +41,7 @@ public class UserController {
     private final UserEntityService userEntityService;
     private final UserDtoConverter userDtoConverter;
     private final SolicitudService solicitudService;
+    private final PaginationLinksUtils paginationLinksUtils;
 
     @Operation(summary = "Usuario por su id")
     @ApiResponses(value = {
@@ -143,4 +146,16 @@ public class UserController {
         return solicitudService.findAll(user.getId());
     }
 
+    @PutMapping("giveadmin/{id}")
+    public ResponseEntity<?> giveAdminRol(@AuthenticationPrincipal UserEntity user,@PathVariable UUID id) {
+        userEntityService.giveAdminRol(user, id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("all")
+    public ResponseEntity<Page<GetUserDto>> findAllUsers (@AuthenticationPrincipal UserEntity user, Pageable pageable, HttpServletRequest request) {
+        Page<GetUserDto> pagUserDto = userEntityService.findAllUsers(user, pageable);
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+        return ResponseEntity.ok().header("link", paginationLinksUtils.createLinkHeader(pagUserDto, uriBuilder)).body(pagUserDto);
+    }
 }

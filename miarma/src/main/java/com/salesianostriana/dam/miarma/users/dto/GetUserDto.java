@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.miarma.users.dto;
 
 import com.salesianostriana.dam.miarma.model.Tipo;
+import com.salesianostriana.dam.miarma.users.model.UserRole;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,4 +25,5 @@ public class GetUserDto {
     private int seguidores;
     private int siguiendo;
     private int numposts;
+    private UserRole role;
 }

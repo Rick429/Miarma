@@ -7,7 +7,6 @@ import com.salesianostriana.dam.miarma.errors.exception.UnauthorizedException;
 import com.salesianostriana.dam.miarma.model.Post;
 import com.salesianostriana.dam.miarma.model.Tipo;
 import com.salesianostriana.dam.miarma.service.PostService;
-import com.salesianostriana.dam.miarma.users.dto.GetUserDto;
 import com.salesianostriana.dam.miarma.users.model.UserEntity;
 import com.salesianostriana.dam.miarma.utils.PaginationLinksUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,11 +23,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController

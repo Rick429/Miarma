@@ -18,19 +18,21 @@ import com.salesianostriana.dam.miarma.users.model.UserRole;
 import com.salesianostriana.dam.miarma.users.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Log
 @Service("userDetailsService")
@@ -168,10 +170,23 @@ public class UserEntityService implements UserDetailsService {
                 throw new SingleEntityNotFoundException(id.toString(), UserEntity.class);
             } else {
                 u1.get().setRole(UserRole.ADMIN);
+                repositorio.save(u1.get());
             }
         } else {
             throw new UnauthorizedException("No tiene permisos para realizar esta acción");
         }
+    }
+
+    public Page<GetUserDto> findAllUsers (UserEntity user, Pageable pageable) {
+        if(user.getRole().equals(UserRole.ADMIN)) {
+            List <GetUserDto> listaPag = repositorio.findAll(pageable).stream()
+                    .map(userDtoConverter::UserEntityToGetUserDto)
+                    .collect(Collectors.toList());
+            return new PageImpl<>(listaPag);
+        } else {
+            throw new UnauthorizedException("Necesita ser admin para acceder a este recurso");
+        }
+
     }
 }
 
