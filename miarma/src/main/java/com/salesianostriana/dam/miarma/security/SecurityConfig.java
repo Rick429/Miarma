@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("*", "/auth/*").anonymous()
                 .antMatchers(HttpMethod.OPTIONS, "/post/*").anonymous()
+                .antMatchers("*", "/download/*").anonymous()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("*").permitAll()
                 .anyRequest().authenticated();
